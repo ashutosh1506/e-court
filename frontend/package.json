@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.1.12",
+    "@tensorflow/tfjs": "^4.22.0",
+    "chart.js": "^4.5.0",
     "daisyui": "^5.1.6",
+    "opencv.js": "^1.2.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "tailwindcss": "^4.1.12"
