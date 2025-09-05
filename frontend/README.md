@@ -8,6 +8,7 @@
 - Libraries Installed - @tensorflow/tfjs chart.js opencv.js
 - Dashboard UI
 - Profile Page
+- Register New Case Page
 
 # Aanya
 
