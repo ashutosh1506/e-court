@@ -21,3 +21,4 @@
 # Yuvan
 
 - ContacUs Page (Map working page is responsive)
+- AboutUs  Page (page is responsive)
