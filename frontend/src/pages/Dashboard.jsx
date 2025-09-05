@@ -12,7 +12,7 @@ const Dashboard = () => {
       <div className="w-full bg-base-100 backdrop-blur-md border border-base-300/40 rounded-md shadow-lg flex items-center justify-between relative px-4 py-2">
         {/* Centered Heading */}
         <h1 className="absolute left-1/2 transform -translate-x-1/2 text-xl md:text-3xl font-bold text-base-content tracking-wide drop-shadow-sm">
-          Lawyer Dashboard
+          Dashboard
         </h1>
 
         {/* Drawer Icon (label toggles drawer below) */}
@@ -80,7 +80,16 @@ const Dashboard = () => {
                 onClick={closeDrawer}
                 className="flex items-center gap-3 rounded-lg px-4 py-2 font-medium transition-all duration-300 hover:bg-primary hover:text-white hover:scale-105 shadow-sm"
               >
-                Total Cases
+                Stats
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="find-lawyer"
+                onClick={closeDrawer}
+                className="flex items-center gap-3 rounded-lg px-4 py-2 font-medium transition-all duration-300 hover:bg-primary hover:text-white hover:scale-105 shadow-sm"
+              >
+                Find Lawyer
               </Link>
             </li>
           </ul>

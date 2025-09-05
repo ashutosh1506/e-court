@@ -12,10 +12,12 @@
 - Case Status Page
 - Video Conference Modal
 - Lawyer Stats Page
+- Find Lawyer Page with LawyerCard
 
 # Aanya
 
 # Devansh
 
 # Yuvan
+
 - ContacUs Page (Map working page is responsive)
