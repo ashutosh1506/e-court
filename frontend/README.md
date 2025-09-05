@@ -9,6 +9,7 @@
 - Dashboard UI
 - Profile Page
 - Register New Case Page
+- Case Status Page
 
 # Aanya
 

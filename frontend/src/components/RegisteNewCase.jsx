@@ -2,7 +2,6 @@ const RegisteNewCase = () => {
   return (
     <div className="min-h-screen bg-base-100 flex items-center justify-center py-10 px-4">
       <div className="w-full max-w-2xl">
-        {/* Page heading */}
         <div className="text-center mb-6 space-y-2">
           <h1 className="text-4xl font-extrabold tracking-tight text-primary">
             Register New Case
@@ -13,7 +12,7 @@ const RegisteNewCase = () => {
         </div>
 
         {/* Card container */}
-        <div className="card bg-info/3 shadow-xl">
+        <div className="card bg-base-100/90 shadow-xl hover:shadow-2xl transition duration-200">
           <div className="card-body">
             <h2 className="card-title justify-center">Case Form</h2>
 
