@@ -1,4 +1,12 @@
+import { Link, Outlet } from "react-router-dom";
+
 const Dashboard = () => {
+  const closeDrawer = () => {
+    const el = document.getElementById("my-drawer-4");
+    if (el && "checked" in el) {
+      el.checked = false;
+    }
+  };
   return (
     <>
       <div className="w-full bg-base-100 backdrop-blur-md border border-base-300/40 rounded-md shadow-lg flex items-center justify-between relative px-4 py-2">
@@ -7,64 +15,87 @@ const Dashboard = () => {
           Lawyer Dashboard
         </h1>
 
-        {/* Drawer Icon */}
-        <div className="drawer drawer-end ">
-          <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
-          <div className="drawer-content">
-            <label htmlFor="my-drawer-4" className="drawer-button">
-              <img
-                src="https://img.icons8.com/?size=100&id=q25UylAybCCR&format=png&color=000000"
-                alt=""
-                className="m-2 w-8 cursor-pointer"
-              />
-            </label>
-          </div>
-          <div className="drawer-side">
-            <label
-              htmlFor="my-drawer-4"
-              aria-label="close sidebar"
-              className="drawer-overlay"
-            ></label>
-            <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4  space-y-2">
-              <li>
-                <a className="flex items-center gap-3 rounded-lg px-4 py-2 font-medium transition-all duration-300 hover:bg-primary hover:text-white hover:scale-105 shadow-sm">
-                  Profile
-                </a>
-              </li>
-              <li>
-                <a className="flex items-center gap-3 rounded-lg px-4 py-2 font-medium transition-all duration-300 hover:bg-primary hover:text-white hover:scale-105 shadow-sm">
-                  New Case
-                </a>
-              </li>
-              <li>
-                <a className="flex items-center gap-3 rounded-lg px-4 py-2 font-medium transition-all duration-300 hover:bg-primary hover:text-white hover:scale-105 shadow-sm">
-                  Case Status
-                </a>
-              </li>
-              <li>
-                <button
-                  className="flex items-center gap-3 rounded-lg px-4 py-2 font-medium transition-all duration-300 hover:bg-primary hover:text-white hover:scale-105 shadow-sm"
-                  onClick={() =>
-                    document.getElementById("my_modal_3").showModal()
-                  }
-                >
-                  Video Conference
-                </button>
-              </li>
-              <li>
-                <a className="flex items-center gap-3 rounded-lg px-4 py-2 font-medium transition-all duration-300 hover:bg-primary hover:text-white hover:scale-105 shadow-sm">
-                  Total Cases
-                </a>
-              </li>
-            </ul>
-          </div>
+        {/* Drawer Icon (label toggles drawer below) */}
+        <label htmlFor="my-drawer-4" className="drawer-button">
+          <img
+            src="https://img.icons8.com/?size=100&id=q25UylAybCCR&format=png&color=000000"
+            alt="open menu"
+            className="m-2 w-8 cursor-pointer"
+          />
+        </label>
+      </div>
+
+      {/* Drawer lives outside the blurred header to avoid stacking context issues */}
+      <div className="drawer drawer-end z-[9999]">
+        <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+        <div className="drawer-content" />
+        <div className="drawer-side">
+          <label
+            htmlFor="my-drawer-4"
+            aria-label="close sidebar"
+            className="drawer-overlay"
+          ></label>
+          <ul className="menu bg-base-200 text-base-content min-h-full w-80 p-4 space-y-2">
+            <li>
+              <Link
+                to="profile"
+                onClick={closeDrawer}
+                className="flex items-center gap-3 rounded-lg px-4 py-2 font-medium transition-all duration-300 hover:bg-primary hover:text-white hover:scale-105 shadow-sm"
+              >
+                Profile
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="register-case"
+                onClick={closeDrawer}
+                className="flex items-center gap-3 rounded-lg px-4 py-2 font-medium transition-all duration-300 hover:bg-primary hover:text-white hover:scale-105 shadow-sm"
+              >
+                New Case
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="case-status"
+                onClick={closeDrawer}
+                className="flex items-center gap-3 rounded-lg px-4 py-2 font-medium transition-all duration-300 hover:bg-primary hover:text-white hover:scale-105 shadow-sm"
+              >
+                Case Status
+              </Link>
+            </li>
+            <li>
+              <button
+                className="flex items-center gap-3 rounded-lg px-4 py-2 font-medium transition-all duration-300 hover:bg-primary hover:text-white hover:scale-105 shadow-sm"
+                onClick={() => {
+                  closeDrawer();
+                  document.getElementById("my_modal_3").showModal();
+                }}
+              >
+                Video Conference
+              </button>
+            </li>
+            <li>
+              <Link
+                to="lawyer-stats"
+                onClick={closeDrawer}
+                className="flex items-center gap-3 rounded-lg px-4 py-2 font-medium transition-all duration-300 hover:bg-primary hover:text-white hover:scale-105 shadow-sm"
+              >
+                Total Cases
+              </Link>
+            </li>
+          </ul>
         </div>
       </div>
-      {/* Place modal at root level (outside any transformed/filtered parent) to ensure viewport centering */}
+
+      {/* Child pages render here */}
+      <div className="p-6">
+        <Outlet />
+      </div>
+
+      {/* Modal */}
       <dialog id="my_modal_3" className="modal modal-middle">
         <div className="modal-box">
           <form method="dialog">
-            {/* if there is a button in form, it will close the modal */}
             <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
               ✕
             </button>

@@ -1,6 +1,6 @@
 const Profile = () => {
   return (
-    <div className="w-full min-h-screen flex items-center justify-center bg-base-100/90  p-10">
+    <div className="w-full min-h-screen flex items-center justify-center bg-base-100/90  p-10 -mt-10">
       <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-x-20">
         {/* Left: Profile Card */}
         <div className="flex flex-col bg-base-100 shadow-xl rounded-xl w-full lg:w-1/2 max-w-md h-full hover:shadow-2xl transition duration-200 mb-10 lg:mb-0">

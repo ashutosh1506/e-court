@@ -1,6 +1,6 @@
 const RegisterNewCase = () => {
   return (
-    <div className="min-h-screen bg-base-100 flex items-center justify-center py-10 px-4">
+    <div className="min-h-screen bg-base-100 flex items-center justify-center py-10 -mt-12 px-4">
       <div className="w-full max-w-2xl">
         <div className="text-center mb-6 space-y-2">
           <h1 className="text-4xl font-extrabold tracking-tight text-primary">

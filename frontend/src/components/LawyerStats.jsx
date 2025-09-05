@@ -48,7 +48,7 @@ const LawyerStats = () => {
   ];
 
   return (
-    <div className="min-h-screen flex mt-20">
+    <div className="min-h-screen flex mt-10">
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-center text-2xl sm:text-3xl md:text-4xl font-extrabold tracking-tight text-primary mb-6 sm:mb-8">
           Stats

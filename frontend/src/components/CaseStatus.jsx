@@ -1,12 +1,12 @@
 const CaseStatus = () => {
   return (
-    <section className="min-h-screen w-full flex flex-col items-center justify-center px-4">
+    <section className="min-h-screen w-full flex flex-col items-center justify-start px-4 mt-10">
       <div className="w-full max-w-5xl mx-auto">
         <h1 className="text-center text-4xl font-extrabold tracking-tight text-primary mb-8">
           Case Status
         </h1>
 
-        <div className="grid gap-6 items-stretch lg:grid-cols-[1fr_auto_1fr]">
+        <div className="grid gap-6 items-stretch lg:grid-cols-[1fr_auto_1fr] mt-20">
           {/* Card-1 */}
           <div className="card flex-1 h-full self-stretch bg-base-100/90 shadow-xl hover:shadow-2xl transition duration-200 rounded-2xl border border-base-200">
             <div className="card-body h-full flex flex-col items-center text-center gap-4">
