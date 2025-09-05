@@ -143,14 +143,14 @@ const Register = () => {
             </div>
 
             <div className="form-control">
-              <label className="label">
+              <label className="label block">
                 <span className="label-text">State</span>
               </label>
               <select
                 name="state"
                 value={formData.state}
                 onChange={handleChange}
-                className="select select-bordered"
+                className="select select-bordered w-full"
                 required
               >
                 <option value="">Select State</option>
@@ -205,8 +205,9 @@ const Register = () => {
 
           {/* Password Section */}
           <h3 className="divider">Choose Password</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="form-control">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Password */}
+            <div className="form-control w-full">
               <label className="label">
                 <span className="label-text">Password</span>
               </label>
@@ -216,12 +217,12 @@ const Register = () => {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Enter password"
-                className="input input-bordered"
+                className="input input-bordered w-full"
                 required
               />
             </div>
-
-            <div className="form-control">
+            {/* Confirm Password */}
+            <div className="form-control w-full">
               <label className="label">
                 <span className="label-text">Confirm Password</span>
               </label>
@@ -231,7 +232,7 @@ const Register = () => {
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 placeholder="Confirm password"
-                className="input input-bordered"
+                className="input input-bordered w-full"
                 required
               />
             </div>
