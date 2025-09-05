@@ -3,7 +3,7 @@ const Dashboard = () => {
     <>
       <div className="w-full bg-base-100 backdrop-blur-md border border-base-300/40 rounded-md shadow-lg flex items-center justify-between relative px-4 py-2">
         {/* Centered Heading */}
-        <h1 className="absolute left-1/2 transform -translate-x-1/2 text-3xl font-bold text-base-content tracking-wide drop-shadow-sm">
+        <h1 className="absolute left-1/2 transform -translate-x-1/2 text-xl md:text-3xl font-bold text-base-content tracking-wide drop-shadow-sm">
           Lawyer Dashboard
         </h1>
 

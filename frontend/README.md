@@ -11,6 +11,7 @@
 - Register New Case Page
 - Case Status Page
 - Video Conference Modal
+- Lawyer Stats Page
 
 # Aanya
 

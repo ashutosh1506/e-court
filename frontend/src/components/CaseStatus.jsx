@@ -15,10 +15,10 @@ const CaseStatus = () => {
               <div className="flex-1 w-full flex flex-col items-center justify-center gap-4">
                 <div className="form-control w-full max-w-sm mx-auto">
                   <label className="floating-label text-center">
-                    <span>Your Email</span>
+                    <span>Case Type</span>
                     <input
                       type="text"
-                      placeholder="mail@site.com"
+                      placeholder="Enter Type"
                       className="input input-bordered w-full"
                     />
                   </label>

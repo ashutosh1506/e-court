@@ -3,7 +3,7 @@ const Profile = () => {
     <div className="w-full min-h-screen flex items-center justify-center bg-base-100/90  p-10">
       <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-x-20">
         {/* Left: Profile Card */}
-        <div className="flex flex-col bg-base-100 shadow-xl rounded-xl w-full lg:w-1/2 max-w-md h-full hover:shadow-2xl transition duration-200">
+        <div className="flex flex-col bg-base-100 shadow-xl rounded-xl w-full lg:w-1/2 max-w-md h-full hover:shadow-2xl transition duration-200 mb-10 lg:mb-0">
           <div className="mx-auto w-40 p-6">
             <img
               src="https://img.daisyui.com/images/profile/demo/batperson@192.webp"
@@ -14,7 +14,7 @@ const Profile = () => {
             <h2 className="text-center text-2xl font-bold text-primary -mt-2">
               Details
             </h2>
-            <div className="mt-6 bg-base-200 rounded-lg p-6 shadow-md">
+            <div className="mt-6 bg-base-200/50 rounded-lg p-6 shadow-md">
               <h3 className="text-lg font-bold text-primary mb-4 border-b pb-2">
                 Profile Details
               </h3>
@@ -39,7 +39,7 @@ const Profile = () => {
         </div>
 
         {/* Divider */}
-        <div className="hidden lg:flex divider divider-horizontal divider-secondary self-stretch"></div>
+        <div className="hidden lg:flex opacity-70 divider divider-horizontal self-stretch"></div>
 
         {/* Right: Edit Profile Form */}
         <div className="flex items-stretch justify-center w-full lg:w-1/2 max-w-lg hover:shadow-2xl transition duration-200">
