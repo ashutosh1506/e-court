@@ -97,65 +97,6 @@ const AboutUs = () => {
           </p>
         </motion.div>
       </div>
-
-      {/* Footer */}
-      <motion.footer
-  initial={{ opacity: 0, y: 40 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.7 }}
-  className="mt-16 bg-base-300 text-base-content pt-10 pb-6 rounded-t-2xl shadow-inner"
->
-  <div className="flex flex-col md:flex-row justify-between items-center gap-10 max-w-6xl mx-auto px-6">
-    
-    {/* Quick Links */}
-    <div className="text-center md:text-left">
-      <h4 className="font-bold text-lg mb-3 text-neutral">Quick Links</h4>
-      <div className="flex flex-col space-y-2">
-        <a href="/contactUs" className="hover:text-primary transition-colors duration-300">
-          Contact Us
-        </a>
-        <a href="/about" className="hover:text-primary transition-colors duration-300">
-          About Us
-        </a>
-        <a href="/terms&condition" className="hover:text-primary transition-colors duration-300">
-          Terms & Conditions
-        </a>
-        <a href="/site_map" className="hover:text-primary transition-colors duration-300">
-          Site Map
-        </a>
-      </div>
-    </div>
-
-    {/* Partners */}
- <div className="flex flex-wrap gap-6 justify-center md:justify-end">
-  <img
-    src={digitalindia}
-    alt="Digital India"
-    className="h-20 w-auto border-2 border-black rounded-lg hover:scale-105 transition-transform duration-300"
-  />
-  <img
-    src={depart}
-    alt="Department of Justice"
-    className="h-20 w-auto border-2 border-black rounded-lg hover:scale-105 transition-transform duration-300"
-  />
-  <img
-    src={supremeCourt}
-    alt="Supreme Court"
-    className="h-20 w-auto border-2 border-black rounded-lg hover:scale-105 transition-transform duration-300"
-  />
-  <img
-    src={nic}
-    alt="NIC"
-    className="h-20 w-auto border-2 border-black rounded-lg hover:scale-105 transition-transform duration-300"
-  />
-</div>
-
-
-  </div>
-
-   
-</motion.footer>
-
     </div>
   );
 };
