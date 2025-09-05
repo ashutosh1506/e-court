@@ -1,5 +1,12 @@
+import React from "react";
+import ContactUs from "./pages/ContactUs.JSX";
+
 const App = () => {
-  return <div></div>;
+  return( 
+  <>
+  <ContactUs/>
+  </>
+  )
 };
 
 export default App;
