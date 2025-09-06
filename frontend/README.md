@@ -25,6 +25,12 @@
 
 # Aanya
 
+- Header Section (Responsive design with logo and title)  
+- Navigation Bar with links for smooth scrolling  
+- Home Section (intro + welcome layout)  
+- Footer Section with quick links and contact details  
+- Full responsiveness for all sections (mobile & desktop view)
+
 # Devansh
 
 # Yuvan
