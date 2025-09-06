@@ -28,7 +28,7 @@ export default function Header() {
           backgroundPosition: "center",
         }}
       >
-        <div className="absolute inset-0 bg-primary/60"></div>
+        <div className="absolute inset-0 "></div>
         <div className="relative z-10 max-w-3xl">
           <h1 className="text-6xl font-extrabold mb-4">Virtual Portal</h1>
           <p className="text-xl text-warning mb-6">

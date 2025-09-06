@@ -19,23 +19,22 @@
 - Case Status Page
 - Video Conference Modal
 - Lawyer Stats Page
-- Find Lawyer Page with LawyerCard
+- FindLawyer Page with LawyerCard Component
 - Redux Store Setup
 - Created UserSlice for lawyer and client
 
 # Aanya
 
-- Header Section (Responsive design with logo and title)  
-- Navigation Bar with links for smooth scrolling  
-- Home Section (intro + welcome layout)  
-- Footer Section with quick links and contact details  
+- Header Section (Responsive design with logo and title)
+- Navigation Bar with links for smooth scrolling
+- Home Section (intro + welcome layout)
+- Footer Section with quick links and contact details
 - Full responsiveness for all sections (mobile & desktop view)
 
 # Devansh
 
 # Yuvan
 
-- ContacUs Page (Map working page is responsive) 
-- AboutUs  Page (page is responsive)
+- ContacUs Page (Map working page is responsive)
+- AboutUs Page (page is responsive)
 - Services Page (Page is Responsive)
-
