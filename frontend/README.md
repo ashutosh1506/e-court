@@ -22,3 +22,4 @@
 
 - ContacUs Page (Map working page is responsive)
 - AboutUs  Page (page is responsive)
+- Services Page (Page is Responsive)
