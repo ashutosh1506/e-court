@@ -1,4 +1,7 @@
+import { useSelector } from "react-redux";
+
 const Profile = () => {
+  const { user } = useSelector((state) => state.user);
   return (
     <div className="w-full min-h-screen flex items-center justify-center bg-base-100/90  p-10 -mt-10">
       <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-x-20">
@@ -29,8 +32,12 @@ const Profile = () => {
                 <p className="text-right">john@gmail.com</p>
                 <p className="font-semibold">Contact No.:</p>
                 <p className="text-right">9213782973</p>
-                <p className="font-semibold">Bar Association No.:</p>
-                <p className="text-right">MP/1234/6789</p>
+                {user === "lawyer" && (
+                  <p className="font-semibold">Bar Association No.:</p>
+                )}
+                {user === "lawyer" && (
+                  <p className="text-right">MP/1234/6789</p>
+                )}
                 <p className="font-semibold">State:</p>
                 <p className="text-right">Punjab</p>
               </div>

@@ -1,4 +1,11 @@
-# Project Setup
+# E-COURT
+
+## Instructions :
+
+- Always Pull the code first before doing any changes to avoid collapse
+- Follow Camel Casing for .js files
+- Follow Pascal Casing for .jsx files
+- Follow Snake Casing for folder names
 
 ## Ashu
 
@@ -13,6 +20,8 @@
 - Video Conference Modal
 - Lawyer Stats Page
 - Find Lawyer Page with LawyerCard
+- Redux Store Setup
+- Created UserSlice for lawyer and client
 
 # Aanya
 
@@ -21,4 +30,4 @@
 # Yuvan
 
 - ContacUs Page (Map working page is responsive)
-- AboutUs  Page (page is responsive)
+- AboutUs Page (page is responsive)
