@@ -15,33 +15,38 @@ function Services() {
       </motion.h1>
 
       {/* Stats Section */}
-      <section className="flex flex-col items-center mb-16">
-        <motion.div
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-6xl"
-        >
-          {[
-            { title: "High Court Complexes", value: "39", color: "bg-primary" },
-            { title: "HC Cases Pending", value: "6.17 M", color: "bg-error" },
-            { title: "HC Cases Disposed", value: "37.33 M", color: "bg-warning" },
-            { title: "HC Cases Today", value: "62.23 K", color: "bg-success" },
-            { title: "District Court Complexes", value: "3504", color: "bg-primary" },
-            { title: "DC Pending Cases", value: "44.34 M", color: "bg-error" },
-            { title: "DC Disposed (Last Month)", value: "1.23 M", color: "bg-warning" },
-            { title: "DC Cases Today", value: "1.15 M", color: "bg-success" },
-          ].map((card, i) => (
-            <div
-              key={i}
-              className={`shadow-lg rounded-xl text-center p-6 text-white ${card.color} hover:scale-105 transition-transform duration-300`}
-            >
-              <p className="text-lg font-medium">{card.title}</p>
-              <h1 className="text-3xl font-bold mt-2">{card.value}</h1>
-            </div>
-          ))}
-        </motion.div>
-      </section>
+     <section className="flex flex-col items-center mb-16">
+  <motion.div
+    initial={{ opacity: 0, y: 40 }}
+    animate={{ opacity: 1, y: 0 }}
+    transition={{ duration: 0.6 }}
+    className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 w-full max-w-6xl"
+  >
+    {[
+      { title: "High Court Complexes", value: "39" },
+      { title: "HC Cases Pending", value: "6.17 M" },
+      { title: "HC Cases Disposed", value: "37.33 M" },
+      { title: "HC Cases Today", value: "62.23 K" },
+      { title: "District Court Complexes", value: "3504" },
+      { title: "DC Pending Cases", value: "44.34 M" },
+      { title: "DC Disposed (Last Month)", value: "1.23 M" },
+      { title: "DC Cases Today", value: "1.15 M" },
+    ].map((card, i) => (
+      <div
+        key={i}
+        className={`shadow-lg rounded-xl text-center p-6 hover:scale-105 transition-transform duration-300 ${
+          i % 2 === 0
+            ? "bg-blue-600 text-white"
+            : "bg-white text-blue-600 border border-blue-600"
+        }`}
+      >
+        <p className="text-lg font-medium">{card.title}</p>
+        <h1 className="text-3xl font-bold mt-2">{card.value}</h1>
+      </div>
+    ))}
+  </motion.div>
+</section>
+
 
       {/* Service Offerings */}
       <section className="max-w-5xl mx-auto mb-16">
