@@ -36,12 +36,12 @@ const Login = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-base-200">
-      <div className="card w-full max-w-md shadow-2xl bg-base-100">
-        <form /*onSubmit={onSubmitHandler}*/ className="card-body">
-          <h2 className="text-2xl font-bold text-center mb-4">Sign In</h2>
+      <div className="card w-full max-w-md shadow-2xl bg-base-100 mx-4">
+        <form /*onSubmit={onSubmitHandler}*/ className="card-body space-y-4">
+          <h2 className="text-2xl font-bold text-center mb-6">Sign In</h2>
 
           {/* Username */}
-          <div className="form-control">
+          <div className="form-control w-full">
             <label className="label">
               <span className="label-text">Username</span>
             </label>
@@ -50,13 +50,13 @@ const Login = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Enter your username"
-              className="input input-bordered"
+              className="input input-bordered w-full"
               required
             />
           </div>
 
           {/* Password */}
-          <div className="form-control">
+          <div className="form-control w-full">
             <label className="label">
               <span className="label-text">Password</span>
             </label>
@@ -65,11 +65,14 @@ const Login = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               placeholder="Enter your password"
-              className="input input-bordered"
+              className="input input-bordered w-full"
               required
             />
             <label className="label">
-              <a href="#" className="label-text-alt link link-hover text-primary">
+              <a
+                href="#"
+                className="label-text-alt link link-hover text-primary mt-2"
+              >
                 Forgot password?
               </a>
             </label>
@@ -82,7 +85,7 @@ const Login = () => {
                 type="checkbox"
                 checked={rememberMe}
                 onChange={() => setRememberMe(!rememberMe)}
-                className="checkbox checkbox-primary"
+                className="checkbox h-4 w-4 checkbox-primary"
               />
               <span className="label-text">Remember me</span>
             </label>

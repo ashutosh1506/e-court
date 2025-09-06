@@ -1,6 +1,9 @@
+import { useSelector } from "react-redux";
 import { Link, Outlet } from "react-router-dom";
 
 const Dashboard = () => {
+  const { user } = useSelector((state) => state.user);
+
   const closeDrawer = () => {
     const el = document.getElementById("my-drawer-4");
     if (el && "checked" in el) {
@@ -45,15 +48,17 @@ const Dashboard = () => {
                 Profile
               </Link>
             </li>
-            <li>
-              <Link
-                to="register-case"
-                onClick={closeDrawer}
-                className="flex items-center gap-3 rounded-lg px-4 py-2 font-medium transition-all duration-300 hover:bg-primary hover:text-white hover:scale-105 shadow-sm"
-              >
-                New Case
-              </Link>
-            </li>
+            {user === "lawyer" && (
+              <li>
+                <Link
+                  to="register-case"
+                  onClick={closeDrawer}
+                  className="flex items-center gap-3 rounded-lg px-4 py-2 font-medium transition-all duration-300 hover:bg-primary hover:text-white hover:scale-105 shadow-sm"
+                >
+                  New Case
+                </Link>
+              </li>
+            )}
             <li>
               <Link
                 to="case-status"
@@ -74,24 +79,28 @@ const Dashboard = () => {
                 Video Conference
               </button>
             </li>
-            <li>
-              <Link
-                to="lawyer-stats"
-                onClick={closeDrawer}
-                className="flex items-center gap-3 rounded-lg px-4 py-2 font-medium transition-all duration-300 hover:bg-primary hover:text-white hover:scale-105 shadow-sm"
-              >
-                Stats
-              </Link>
-            </li>
-            <li>
-              <Link
-                to="find-lawyer"
-                onClick={closeDrawer}
-                className="flex items-center gap-3 rounded-lg px-4 py-2 font-medium transition-all duration-300 hover:bg-primary hover:text-white hover:scale-105 shadow-sm"
-              >
-                Find Lawyer
-              </Link>
-            </li>
+            {user === "lawyer" && (
+              <li>
+                <Link
+                  to="lawyer-stats"
+                  onClick={closeDrawer}
+                  className="flex items-center gap-3 rounded-lg px-4 py-2 font-medium transition-all duration-300 hover:bg-primary hover:text-white hover:scale-105 shadow-sm"
+                >
+                  Stats
+                </Link>
+              </li>
+            )}
+            {user === "client" && (
+              <li>
+                <Link
+                  to="find-lawyer"
+                  onClick={closeDrawer}
+                  className="flex items-center gap-3 rounded-lg px-4 py-2 font-medium transition-all duration-300 hover:bg-primary hover:text-white hover:scale-105 shadow-sm"
+                >
+                  Find Lawyer
+                </Link>
+              </li>
+            )}
           </ul>
         </div>
       </div>
