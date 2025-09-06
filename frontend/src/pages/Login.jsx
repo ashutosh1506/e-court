@@ -71,7 +71,7 @@ const Login = () => {
             <label className="label">
               <a
                 href="#"
-                className="label-text-alt link link-hover text-primary"
+                className="label-text-alt link link-hover text-primary mt-2"
               >
                 Forgot password?
               </a>
@@ -85,7 +85,7 @@ const Login = () => {
                 type="checkbox"
                 checked={rememberMe}
                 onChange={() => setRememberMe(!rememberMe)}
-                className="checkbox checkbox-primary"
+                className="checkbox h-4 w-4 checkbox-primary"
               />
               <span className="label-text">Remember me</span>
             </label>

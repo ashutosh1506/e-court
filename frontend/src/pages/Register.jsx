@@ -188,41 +188,43 @@ const Register = () => {
           </div>
 
           {/* Gender */}
-          <h3 className="divider">Gender</h3>
-          <div className="form-control">
-            <div className="flex flex-wrap gap-6">
-              <label className="label cursor-pointer">
+          <div className="flex items-center mb-4 mt-4">
+            <label className="label block">
+              <span className="label-text">Gender</span>
+            </label>
+            <div className="flex flex-row gap-6 ml-4">
+              <label className="label cursor-pointer flex items-center">
                 <input
                   type="radio"
                   name="gender"
                   value="Male"
                   onChange={handleChange}
                   checked={formData.gender === "Male"}
-                  className="radio radio-primary"
+                  className="radio h-4 w-4 radio-primary"
                 />
-                <span className="label-text ml-2">Male</span>
+                <span className="label-text ml-1">Male</span>
               </label>
-              <label className="label cursor-pointer">
-                <input
-                  type="radio"
-                  name="gender"
-                  value="Trans"
-                  onChange={handleChange}
-                  checked={formData.gender === "Trans"}
-                  className="radio radio-primary"
-                />
-                <span className="label-text ml-2">Trans</span>
-              </label>
-              <label className="label cursor-pointer">
+              <label className="label cursor-pointer flex items-center">
                 <input
                   type="radio"
                   name="gender"
                   value="Female"
                   onChange={handleChange}
                   checked={formData.gender === "Female"}
-                  className="radio radio-primary"
+                  className="radio h-4 w-4 radio-primary"
                 />
-                <span className="label-text ml-2">Female</span>
+                <span className="label-text ml-1">Female</span>
+              </label>
+              <label className="label cursor-pointer flex items-center">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="Other"
+                  onChange={handleChange}
+                  checked={formData.gender === "Other"}
+                  className="radio h-4 w-4 radio-primary"
+                />
+                <span className="label-text ml-1">Other</span>
               </label>
             </div>
           </div>
