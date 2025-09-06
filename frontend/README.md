@@ -29,10 +29,7 @@
 
 # Yuvan
 
-- ContacUs Page (Map working page is responsive)
-<<<<<<< HEAD
+- ContacUs Page (Map working page is responsive) 
 - AboutUs  Page (page is responsive)
 - Services Page (Page is Responsive)
-=======
-- AboutUs Page (page is responsive)
->>>>>>> 650469d481137211c0a89a468c1622e2e88e4a02
+
