@@ -36,7 +36,7 @@ const Login = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-base-200">
-      <div className="card w-full max-w-md shadow-2xl bg-base-100">
+      <div className="card w-full max-w-md shadow-2xl bg-base-100 mx-4">
         <form /*onSubmit={onSubmitHandler}*/ className="card-body space-y-4">
           <h2 className="text-2xl font-bold text-center mb-6">Sign In</h2>
 
@@ -69,7 +69,10 @@ const Login = () => {
               required
             />
             <label className="label">
-              <a href="#" className="label-text-alt link link-hover text-primary">
+              <a
+                href="#"
+                className="label-text-alt link link-hover text-primary"
+              >
                 Forgot password?
               </a>
             </label>
