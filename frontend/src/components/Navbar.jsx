@@ -50,11 +50,34 @@ export default function Navbar() {
             Contact Us
           </Link>
         </li>
-        <li>
+        {/*<li>
           <a href="#" className="hover:text-warning">
             Courts ↓
           </a>
-        </li>
+        </li>*/}
+        {/* Courts Dropdown */}
+        <div className="dropdown dropdown-hover">
+          <label
+            tabIndex={0}
+            className="cursor-pointer hover:text-warning transition"
+          >
+            Courts ↓
+          </label>
+          <ul
+            tabIndex={0}
+            className="dropdown-content menu p-2 shadow bg-black rounded-box w-40"
+          >
+            <li>
+              <Link to="/supreme-court">Supreme Court</Link>
+            </li>
+            <li>
+              <Link to="/high-court">High Court</Link>
+            </li>
+            <li>
+              <Link to="/district-court">District Court</Link>
+            </li>
+          </ul>
+        </div>
       </ul>
 
       {/* Register/Login Dropdown */}
