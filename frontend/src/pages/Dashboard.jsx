@@ -1,15 +1,24 @@
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 
 const Dashboard = () => {
-  const { user } = useSelector((state) => state.user);
+  const { user, isLoggedIn } = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/login", { replace: true });
+    }
+  }, [isLoggedIn, navigate]);
   const closeDrawer = () => {
     const el = document.getElementById("my-drawer-4");
     if (el && "checked" in el) {
       el.checked = false;
     }
   };
+
+  if (!isLoggedIn) return null;
   return (
     <div>
       <div className="w-full bg-base-100 backdrop-blur-md border border-base-300/40 rounded-md shadow-lg flex items-center justify-between relative px-4 py-2 ">
