@@ -13,7 +13,9 @@
 - added pre hook to check if user has changed password or not and added functions to generate access and refresh tokens
 - Completed Register API for client tested on postman
 - Completed Login API with giving tokens to logged in user 
+- Completed Logout API with JWT verify Middleware
+
 
 # Ashu
-
 - Database Setup
+
