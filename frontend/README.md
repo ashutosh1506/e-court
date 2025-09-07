@@ -24,6 +24,7 @@
 - Created UserSlice for lawyer and client
 - Routing setup in App.jsx
 - Different Setup for Lawyer and Client
+- Login/Logout conditional rendering
 
 # Aanya
 
