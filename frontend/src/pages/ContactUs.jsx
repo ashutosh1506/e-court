@@ -12,13 +12,13 @@ import {
 
 function ContactUs() {
   return (
-    <div className="min-h-screen bg-base-200 text-base-content flex flex-col items-center px-4 sm:px-6 md:px-12 lg:px-20 py-12">
+    <div className="min-h-screen bg-base-100 text-base-content flex flex-col items-center px-4 sm:px-6 md:px-12 lg:px-20 py-12">
       {/* Contact Section */}
       <motion.h2
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-center text-4xl font-bold drop-shadow mb-12 text-neutral"
+        className="text-4xl md:text-5xl font-extrabold text-center mb-12 text-secondary "
       >
         Contact Us
       </motion.h2>
@@ -64,9 +64,7 @@ function ContactUs() {
               rows="5"
               className="textarea textarea-bordered w-full"
             ></textarea>
-            <button className="btn btn-primary w-full md:w-auto">
-              Submit
-            </button>
+            <button className="btn btn-primary w-full md:w-auto">Submit</button>
           </form>
         </motion.div>
 
@@ -136,8 +134,6 @@ function ContactUs() {
           loading="lazy"
         ></iframe>
       </motion.div>
-
-       
     </div>
   );
 }

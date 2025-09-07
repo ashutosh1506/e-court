@@ -26,8 +26,12 @@ export default function Navbar() {
 
   return (
     <nav
-      className={`navbar absolute z-50 px-6 py-3 flex justify-between items-center transition-colors duration-300 
-        ${isHome ? "bg-transparent text-white" : "bg-base-200 text-black shadow"} `}
+      className={`navbar w-full z-50 px-6 py-3 flex justify-between items-center transition-colors duration-300 
+        ${
+          isHome
+            ? "absolute top-0 left-0 bg-transparent text-white"
+            : "sticky top-0 bg-base-200 text-black shadow"
+        } `}
     >
       {/* Logo */}
       <div className="flex items-center gap-3">
@@ -70,15 +74,15 @@ export default function Navbar() {
           </label>
           <ul
             tabIndex={0}
-            className="dropdown-content menu p-2 shadow bg-info rounded-box w-40"
+            className="dropdown-content menu p-2 shadow rounded-box w-40"
           >
-            <li>
+            <li className="hover:bg-primary">
               <Link to="/supreme-court">Supreme Court</Link>
             </li>
-            <li>
+            <li className="hover:bg-primary">
               <Link to="/high-court">High Court</Link>
             </li>
-            <li>
+            <li className="hover:bg-primary">
               <Link to="/district-court">District Court</Link>
             </li>
           </ul>

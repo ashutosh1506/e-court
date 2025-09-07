@@ -1,18 +1,18 @@
 import React from "react";
 import { motion } from "framer-motion";
 import supremeCourt from "../assets/supremeCourt.jpg";
-import depart from "../assets/depart.jpg"
-import digitalindia from "../assets/digitalindia.jpg"
-import nic from "../assets/nic.jpg"
+import depart from "../assets/depart.jpg";
+import digitalindia from "../assets/digitalindia.jpg";
+import nic from "../assets/nic.jpg";
 const AboutUs = () => {
   return (
-    <div className="min-h-screen bg-base-200 text-base-content px-4 sm:px-6 md:px-12 lg:px-20 py-12">
+    <div className="min-h-screen bg-base-100 text-base-content px-4 sm:px-6 md:px-12 lg:px-20 py-12">
       {/* Title */}
       <motion.h2
         initial={{ opacity: 0, y: -30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-center text-4xl font-bold drop-shadow mb-12 text-neutral"
+        className="text-4xl md:text-5xl font-extrabold text-center mb-12 text-secondary"
       >
         About Us
       </motion.h2>
@@ -36,16 +36,22 @@ const AboutUs = () => {
             system more efficiently and accessibly.
           </p>
 
-          <h3 className="text-2xl font-semibold text-neutral mb-4">Who We Are</h3>
+          <h3 className="text-2xl font-semibold text-neutral mb-4">
+            Who We Are
+          </h3>
           <p className="mb-4">
             At Virtual-Court India, we are committed to bridging the gap between
             traditional court proceedings and the digital age.
           </p>
 
-          <h3 className="text-2xl font-semibold text-neutral mb-4">Our Features</h3>
+          <h3 className="text-2xl font-semibold text-neutral mb-4">
+            Our Features
+          </h3>
           <ul className="list-disc list-inside space-y-2">
             <li>
-              <span className="font-semibold">Online Hearings via Video Call:</span>{" "}
+              <span className="font-semibold">
+                Online Hearings via Video Call:
+              </span>{" "}
               Attend hearings from anywhere.
             </li>
             <li>
@@ -81,8 +87,8 @@ const AboutUs = () => {
               all, accessible from anywhere.
             </li>
             <li>
-              <span className="font-semibold">Security:</span> Face recognition &
-              modern safeguards.
+              <span className="font-semibold">Security:</span> Face recognition
+              & modern safeguards.
             </li>
             <li>
               <span className="font-semibold">Innovation:</span> Constantly

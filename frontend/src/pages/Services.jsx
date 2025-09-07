@@ -3,13 +3,13 @@ import { motion } from "framer-motion";
 
 function Services() {
   return (
-    <div className="min-h-screen flex flex-col bg-base-100 text-base-content px-6 py-12">
+    <div className="min-h-screen flex flex-col bg-base-100 text-base-content px-6 py-12 ">
       {/* Heading */}
       <motion.h1
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="text-4xl md:text-5xl font-extrabold text-center mb-12 text-primary"
+        className="text-4xl md:text-5xl font-extrabold text-center mb-12 text-secondary"
       >
         Our Services
       </motion.h1>

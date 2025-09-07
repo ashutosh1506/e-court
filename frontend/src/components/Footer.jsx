@@ -179,7 +179,7 @@ export default function Footer() {
       </section>
 
       {/* Bottom */}
-      <div className="bg-secondary text-success-content flex flex-col md:flex-row justify-between items-center px-8 py-3 text-sm">
+      <div className="bg-primary text-success-content flex flex-col md:flex-row justify-between items-center px-8 py-3 text-sm">
         <p>@Virtual © e-Court Portal, for online hearing conference.</p>
         <div className="flex gap-4 mt-2 md:mt-0">
           <a href="#" className="hover:text-warning">

@@ -50,7 +50,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center min-h-screen bg-base-200">
+    <div className="flex flex-col justify-center items-center min-h-screen bg-base-100">
       <h1 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-primary -mt-20 mb-10">
         Login as {user}
       </h1>
