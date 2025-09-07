@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 //import axios from "axios";
 //import { toast } from "react-toastify";
-//import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   // const onSubmitHandler = async (event) => {
   //   event.preventDefault();
@@ -100,7 +100,7 @@ const Login = () => {
 
           {/* Register */}
           <p className="text-center text-sm mt-4">
-            Don’t have an account?{" "}
+            Don't have an account?{" "}
             <span
               onClick={() => navigate("/register")}
               className="link link-primary cursor-pointer"

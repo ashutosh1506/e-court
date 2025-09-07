@@ -1,6 +1,4 @@
-import Footer from "../components/Footer";
-import Header from "../components/header";
-import Navbar from "../components/Navbar";
+import Header from "../components/Header";
 
 export default function Home() {
   const notices = [
@@ -29,7 +27,6 @@ export default function Home() {
 
   return (
     <>
-      <Navbar />
       <Header />
       <section className="bg-base-200 py-12 flex flex-col items-center">
         <h2 className="text-3xl font-bold text-primary mb-8">
@@ -71,7 +68,6 @@ export default function Home() {
           </a>
         </div>
       </section>
-      <Footer />
     </>
   );
 }
