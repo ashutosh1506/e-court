@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 // import { setLogin } from "../utils/userSlice";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
@@ -21,13 +21,13 @@ const Login = () => {
   //     let response;
   //     if (user === "lawyer") {
   //       response = await axios.post("http://localhost:5000/api/lawyer/login", {
-  //         username,
+  //         email,
   //         password,
   //       });
   //     }
   //     else{
   //       response = await axios.post("http://localhost:5000/api/client/login", {
-  //         username,
+  //         email,
   //         password,
   //       });
   //     }
@@ -60,13 +60,13 @@ const Login = () => {
 
           <div className="form-control w-full">
             <label className="label">
-              <span className="label-text">Username</span>
+              <span className="label-text">Email</span>
             </label>
             <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter your username"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="Enter your email"
               className="input input-bordered w-full"
               required
             />

@@ -1,8 +1,8 @@
 import {Router} from 'express';
-import { registerClient } from '../controllers/client.controller.js';
+import { loginClient, registerClient } from '../controllers/clientController.js';
 
 const router = Router();
 router.route('/register').post(registerClient);
-
+router.route('/login').get(loginClient)
 
 export default router;
