@@ -19,3 +19,10 @@
 # Ashu
 - Database Setup
 
+
+# Aanya
+- Lawyer registration and login system with secure authentication (JWT + bcrypt).
+- Client and Lawyer routes implemented with Express.js and MongoDB.
+- Passwords are securely hashed before storing in the database.
+- Fully responsive frontend with header, navbar, home, and footer sections.
+- Built with Node.js, Express.js, MongoDB, and Postman API testing.
