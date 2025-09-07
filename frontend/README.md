@@ -26,6 +26,7 @@
 - Different Setup for Lawyer and Client
 - Login/Logout conditional rendering
 - Client Register/Login successfully integrated
+- Lawyer Register/Login successfully integrated
 
 # Aanya
 

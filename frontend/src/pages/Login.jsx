@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-import { setLogin } from "../utils/userSlice";
+import { setLogin, setRoleAsClient, setRoleAsLawyer } from "../utils/userSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -20,28 +20,42 @@ const Login = () => {
     try {
       let response;
       if (user === "lawyer") {
-        response = await axios.post(backendURL + "/lawyer/login", {
+        response = await axios.post(backendURL + "/lawyers/login", {
           email,
           password,
         });
+
+        if (response.data.success) {
+          const { Accesstoken, lawyer } = response.data.data;
+          localStorage.setItem("token", Accesstoken);
+          if (rememberMe) {
+            localStorage.setItem("rememberUser", email);
+          }
+          toast.success("Welcome " + lawyer.fullName);
+          dispatch(setLogin());
+          dispatch(setRoleAsLawyer());
+          navigate("/dashboard");
+        } else {
+          toast.error(response.data.message);
+        }
       } else {
         response = await axios.post(backendURL + "/clients/login", {
           email,
           password,
         });
-      }
-
-      if (response.data.success) {
-        const { Accesstoken, client } = response.data.data;
-        localStorage.setItem("token", Accesstoken);
-        if (rememberMe) {
-          localStorage.setItem("rememberUser", email);
+        if (response.data.success) {
+          const { Accesstoken, client } = response.data.data;
+          localStorage.setItem("token", Accesstoken);
+          if (rememberMe) {
+            localStorage.setItem("rememberUser", email);
+          }
+          toast.success("Welcome " + client.fullName);
+          dispatch(setRoleAsClient());
+          dispatch(setLogin());
+          navigate("/dashboard");
+        } else {
+          toast.error(response.data.message);
         }
-        toast.success("Welcome " + client.fullName);
-        dispatch(setLogin());
-        navigate("/dashboard");
-      } else {
-        toast.error(response.data.message);
       }
     } catch (error) {
       console.log(error.response?.data || error.message);

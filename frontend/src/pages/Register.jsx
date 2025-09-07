@@ -13,7 +13,7 @@ const Register = () => {
     dob: "",
     email: "",
     phone: "",
-    barNo: "",
+    barAssociationNo: "",
     gender: "",
     state: "",
     password: "",
@@ -69,7 +69,7 @@ const Register = () => {
     try {
       let response;
       if (user === "lawyer") {
-        response = await axios.post(backendURL + "/lawyer/register", formData);
+        response = await axios.post(backendURL + "/lawyers/register", formData);
       } else {
         response = await axios.post(backendURL + "/clients/register", formData);
       }
@@ -165,8 +165,8 @@ const Register = () => {
                 </label>
                 <input
                   type="text"
-                  name="barNo"
-                  value={formData.barNo}
+                  name="barAssociationNo"
+                  value={formData.barAssociationNo}
                   onChange={handleChange}
                   placeholder="Enter Bar Association No"
                   className="input input-bordered"
