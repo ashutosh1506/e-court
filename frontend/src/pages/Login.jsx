@@ -1,53 +1,53 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-// import { useDispatch } from "react-redux";
-//import axios from "axios";
-//import { toast } from "react-toastify";
+import { useSelector, useDispatch } from "react-redux";
+import axios from "axios";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
-// import { setLogin } from "../utils/userSlice";
+import { setLogin } from "../utils/userSlice";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
 
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { user } = useSelector((state) => state.user);
 
-  // const onSubmitHandler = async (event) => {
-  //   event.preventDefault();
-  //   try {
-  //     let response;
-  //     if (user === "lawyer") {
-  //       response = await axios.post("http://localhost:5000/api/lawyer/login", {
-  //         email,
-  //         password,
-  //       });
-  //     }
-  //     else{
-  //       response = await axios.post("http://localhost:5000/api/client/login", {
-  //         email,
-  //         password,
-  //       });
-  //     }
+  const onSubmitHandler = async (event) => {
+    event.preventDefault();
+    try {
+      let response;
+      if (user === "lawyer") {
+        response = await axios.post(backendURL + "/lawyer/login", {
+          email,
+          password,
+        });
+      } else {
+        response = await axios.post(backendURL + "/clients/login", {
+          email,
+          password,
+        });
+      }
 
-  //     if (response.data.success) {
-  //       localStorage.setItem("token", response.data.token);
-  //       if (rememberMe) {
-  //         localStorage.setItem("rememberUser", username);
-  //       }
-  //       toast.success("Welcome " + username);
-  //       dispatch(setLogin());
-  //       navigate("/dashboard");
-  //     } else {
-  //       toast.error(response.data.message);
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //     toast.error("Something went wrong!");
-  //   }
-  // };
+      if (response.data.success) {
+        const { Accesstoken, client } = response.data.data;
+        localStorage.setItem("token", Accesstoken);
+        if (rememberMe) {
+          localStorage.setItem("rememberUser", email);
+        }
+        toast.success("Welcome " + client.fullName);
+        dispatch(setLogin());
+        navigate("/dashboard");
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (error) {
+      console.log(error.response?.data || error.message);
+      toast.error("Something went wrong!");
+    }
+  };
 
   return (
     <div className="flex flex-col justify-center items-center min-h-screen bg-base-200">
@@ -112,7 +112,7 @@ const Login = () => {
             <button
               type="submit"
               className="btn btn-primary w-full"
-              // onClick={onSubmitHandler}
+              onClick={onSubmitHandler}
             >
               Login
             </button>

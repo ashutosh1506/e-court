@@ -25,6 +25,7 @@
 - Routing setup in App.jsx
 - Different Setup for Lawyer and Client
 - Login/Logout conditional rendering
+- Client Register/Login successfully integrated
 
 # Aanya
 

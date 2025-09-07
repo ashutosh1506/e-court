@@ -1,24 +1,26 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
-//import axios from "axios";
-//import { toast } from "react-toastify";
-//import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const { user } = useSelector((state) => state.user);
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+
   const [formData, setFormData] = useState({
     fullName: "",
     dob: "",
     email: "",
-    mobile: "",
+    phone: "",
     barNo: "",
     gender: "",
     state: "",
     password: "",
-    confirmPassword: "",
+    confirm_password: "",
   });
 
-  //const navigate = useNavigate();
+  const navigate = useNavigate();
 
   const states = [
     "Andhra Pradesh",
@@ -58,33 +60,36 @@ const Register = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   if (formData.password !== formData.confirmPassword) {
-  //     toast.error("Passwords do not match!");
-  //     return;
-  //   }
-  //   try {
-  //     const response = await axios.post(
-  //       "http://localhost:5000/api/lawyer/register",
-  //       formData
-  //     );
-  //     if (response.data.success) {
-  //       toast.success("Registration Successful!");
-  //       navigate("/login");
-  //     } else {
-  //       toast.error(response.data.message);
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //     toast.error("Something went wrong!");
-  //   }
-  // };
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (formData.password !== formData.confirm_password) {
+      toast.error("Passwords do not match!");
+      return;
+    }
+    try {
+      let response;
+      if (user === "lawyer") {
+        response = await axios.post(backendURL + "/lawyer/register", formData);
+      } else {
+        response = await axios.post(backendURL + "/clients/register", formData);
+      }
+
+      if (response.data.success) {
+        toast.success("Registration Successful!");
+        navigate("/login");
+      } else {
+        toast.error(response.data.message);
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Something went wrong!");
+    }
+  };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-base-200">
       <div className="card w-full max-w-4xl shadow-2xl bg-base-100 m-4">
-        <form /*onSubmit={handleSubmit} */ className="card-body">
+        <form className="card-body">
           <h2 className="text-2xl font-bold text-center mb-6">
             Registration Form
           </h2>
@@ -140,14 +145,14 @@ const Register = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
             <div className="form-control">
               <label className="label">
-                <span className="label-text">Mobile Number</span>
+                <span className="label-text">Phone Number</span>
               </label>
               <input
                 type="tel"
-                name="mobile"
-                value={formData.mobile}
+                name="phone"
+                value={formData.phone}
                 onChange={handleChange}
-                placeholder="Enter mobile number"
+                placeholder="Enter phone number"
                 className="input input-bordered"
                 required
               />
@@ -258,8 +263,8 @@ const Register = () => {
               </label>
               <input
                 type="password"
-                name="confirmPassword"
-                value={formData.confirmPassword}
+                name="confirm_password"
+                value={formData.confirm_password}
                 onChange={handleChange}
                 placeholder="Confirm password"
                 className="input input-bordered w-full"
@@ -270,7 +275,11 @@ const Register = () => {
 
           {/* Submit Button */}
           <div className="form-control mt-6">
-            <button type="submit" className="btn btn-primary w-full">
+            <button
+              type="submit"
+              className="btn btn-primary w-full"
+              onClick={handleSubmit}
+            >
               Submit
             </button>
           </div>
