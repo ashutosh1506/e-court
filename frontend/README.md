@@ -15,13 +15,15 @@
 - Libraries Installed - @tensorflow/tfjs chart.js opencv.js
 - Dashboard UI
 - Profile Page
-- Register New Case Page
-- Case Status Page
+- RegisterNewCase Page
+- CaseStatus Page
 - Video Conference Modal
-- Lawyer Stats Page
+- LawyerStats Page
 - FindLawyer Page with LawyerCard Component
 - Redux Store Setup
 - Created UserSlice for lawyer and client
+- Routing setup in App.jsx
+- Different Setup for Lawyer and Client
 
 # Aanya
 

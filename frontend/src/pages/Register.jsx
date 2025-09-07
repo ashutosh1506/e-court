@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 //import axios from "axios";
 //import { toast } from "react-toastify";
 //import { useNavigate } from "react-router-dom";
 
 const Register = () => {
+  const { user } = useSelector((state) => state.user);
   const [formData, setFormData] = useState({
     fullName: "",
     dob: "",
@@ -151,20 +153,22 @@ const Register = () => {
               />
             </div>
 
-            <div className="form-control">
-              <label className="label">
-                <span className="label-text">Bar Association No</span>
-              </label>
-              <input
-                type="text"
-                name="barNo"
-                value={formData.barNo}
-                onChange={handleChange}
-                placeholder="Enter Bar Association No"
-                className="input input-bordered"
-                required
-              />
-            </div>
+            {user === "lawyer" && (
+              <div className="form-control">
+                <label className="label">
+                  <span className="label-text">Bar Association No</span>
+                </label>
+                <input
+                  type="text"
+                  name="barNo"
+                  value={formData.barNo}
+                  onChange={handleChange}
+                  placeholder="Enter Bar Association No"
+                  className="input input-bordered"
+                  required
+                />
+              </div>
+            )}
 
             <div className="form-control">
               <label className="label block">

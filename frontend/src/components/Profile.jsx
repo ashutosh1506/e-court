@@ -83,16 +83,18 @@ const Profile = () => {
                 />
               </div>
 
-              <div className="form-control">
-                <label className="label font-semibold">
-                  Bar Association No.
-                </label>
-                <input
-                  type="text"
-                  className="input input-bordered w-full"
-                  defaultValue="MP/1234/6789"
-                />
-              </div>
+              {user === "lawyer" && (
+                <div className="form-control">
+                  <label className="label font-semibold">
+                    Bar Association No.
+                  </label>
+                  <input
+                    type="text"
+                    className="input input-bordered w-full"
+                    defaultValue="MP/1234/6789"
+                  />
+                </div>
+              )}
 
               <div className="form-control">
                 <label className="label font-semibold">State</label>

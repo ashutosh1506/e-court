@@ -1,7 +1,10 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
+// import { useDispatch } from "react-redux";
 //import axios from "axios";
 //import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+// import { setLogin } from "../utils/userSlice";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -9,14 +12,25 @@ const Login = () => {
   const [rememberMe, setRememberMe] = useState(false);
 
   const navigate = useNavigate();
+  // const dispatch = useDispatch();
+  const { user } = useSelector((state) => state.user);
 
   // const onSubmitHandler = async (event) => {
   //   event.preventDefault();
   //   try {
-  //     const response = await axios.post("http://localhost:5000/api/user/login", {
-  //       username,
-  //       password,
-  //     });
+  //     let response;
+  //     if (user === "lawyer") {
+  //       response = await axios.post("http://localhost:5000/api/lawyer/login", {
+  //         username,
+  //         password,
+  //       });
+  //     }
+  //     else{
+  //       response = await axios.post("http://localhost:5000/api/client/login", {
+  //         username,
+  //         password,
+  //       });
+  //     }
 
   //     if (response.data.success) {
   //       localStorage.setItem("token", response.data.token);
@@ -24,7 +38,8 @@ const Login = () => {
   //         localStorage.setItem("rememberUser", username);
   //       }
   //       toast.success("Welcome " + username);
-  //       navigate("/");
+  //       dispatch(setLogin());
+  //       navigate("/dashboard");
   //     } else {
   //       toast.error(response.data.message);
   //     }
@@ -35,12 +50,14 @@ const Login = () => {
   // };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-base-200">
-      <div className="card w-full max-w-md shadow-2xl bg-base-100 mx-4">
-        <form /*onSubmit={onSubmitHandler}*/ className="card-body space-y-4">
+    <div className="flex flex-col justify-center items-center min-h-screen bg-base-200">
+      <h1 className="text-3xl lg:text-4xl font-extrabold tracking-tight text-primary -mt-20 mb-10">
+        Login as {user}
+      </h1>
+      <div className="card lg:w-full max-w-md shadow-2xl bg-base-100 mx-4">
+        <form className="card-body space-y-4">
           <h2 className="text-2xl font-bold text-center mb-6">Sign In</h2>
 
-          {/* Username */}
           <div className="form-control w-full">
             <label className="label">
               <span className="label-text">Username</span>
@@ -55,7 +72,6 @@ const Login = () => {
             />
           </div>
 
-          {/* Password */}
           <div className="form-control w-full">
             <label className="label">
               <span className="label-text">Password</span>
@@ -93,7 +109,11 @@ const Login = () => {
 
           {/* Submit Button */}
           <div className="form-control mt-4">
-            <button type="submit" className="btn btn-primary w-full">
+            <button
+              type="submit"
+              className="btn btn-primary w-full"
+              // onClick={onSubmitHandler}
+            >
               Login
             </button>
           </div>

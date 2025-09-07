@@ -1,20 +1,21 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: "lawyer",
-  isLoggedIn: true,
+  user: null,
+  isLoggedIn: false,
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    loginAsLawyer: (state) => {
+    setRoleAsLawyer: (state) => {
       state.user = "lawyer";
-      state.isLoggedIn = true;
     },
-    loginAsClient: (state) => {
+    setRoleAsClient: (state) => {
       state.user = "client";
+    },
+    setLogin: (state) => {
       state.isLoggedIn = true;
     },
     logout: (state) => {
@@ -24,5 +25,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { loginAsLawyer, loginAsClient, logout } = userSlice.actions;
+export const { setRoleAsLawyer, setRoleAsClient, setLogin, logout } =
+  userSlice.actions;
 export default userSlice.reducer;
