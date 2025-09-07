@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import clientRoute from "./routes/clientRoute.js";
+import lawyerRoute from "./routes/lawyerRoute.js";
 const app = express();
 
 app.use(
@@ -25,5 +26,6 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 app.use("/api/v1/clients", clientRoute);
+app.use("/api/v1/lawyers", lawyerRoute); 
 
 export { app };
