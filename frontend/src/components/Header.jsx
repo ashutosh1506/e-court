@@ -20,39 +20,77 @@ export default function Header() {
     <>
       {/* Hero Section */}
       <section
-        className="relative h-[90vh] flex items-center justify-center text-center text-white"
+        className="relative flex items-center justify-center text-center text-white 
+                   h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-screen px-4"
         style={{
           backgroundImage:
-            "url('https://japanupclose.web-japan.org/files/100438998.jpeg')",
+            "url('https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/abf8996f-352b-5cf2-940d-abc4fd77599d/aea87596-f96d-554b-b6b6-3f49ba6ea7ca.jpg')",
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
       >
-        <div className="absolute inset-0 "></div>
-        <div className="relative z-10 max-w-3xl">
-          <h1 className="text-6xl font-extrabold mb-4">Virtual Portal</h1>
-          <p className="text-xl text-warning mb-6">
+        {/* Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/80 to-black/40"></div>
+
+        {/* Hero Content */}
+        <div className="relative z-10 max-w-3xl animate-fadeIn">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold mb-4 sm:mb-6 drop-shadow-lg leading-snug">
+            Virtual Portal
+          </h1>
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-200 mb-6 sm:mb-8 leading-relaxed px-2 sm:px-6">
             Digital transformation of the Indian Judiciary. Access court
             services, file cases, and track proceedings online.
           </p>
-          <button className="btn btn-warning text-black font-bold text-lg px-6 py-3">
+          <button className="btn btn-accent text-neutral font-bold text-sm sm:text-base md:text-lg px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full shadow-lg hover:scale-105 hover:shadow-info transition">
             Access e-Court Services
           </button>
         </div>
       </section>
 
       {/* News Ticker */}
-      <section className="bg-neutral text-white flex items-center px-6 py-3">
-        <span className="text-warning font-bold mr-4">LATEST |</span>
+      <section className="bg-base-200 text-content flex items-center px-4 sm:px-6 py-2 sm:py-3 border-t border-base-300">
+        <span className="text-primary font-bold mr-2 sm:mr-4 text-xs sm:text-sm md:text-base">
+          LATEST
+        </span>
         <div className="overflow-hidden w-full">
           <div
             key={index}
-            className="animate-slide inline-block whitespace-nowrap"
+            className="animate-marquee inline-block whitespace-nowrap 
+                       text-xs sm:text-sm md:text-base"
           >
             {messages[index]}
           </div>
         </div>
       </section>
+
+      {/* Animations */}
+      <style jsx="true">{`
+        .animate-fadeIn {
+          animation: fadeIn 1.2s ease-in-out;
+        }
+        @keyframes fadeIn {
+          from {
+            opacity: 0;
+            transform: translateY(20px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        .animate-marquee {
+          animation: marquee 6s linear infinite;
+        }
+        @keyframes marquee {
+          from {
+            transform: translateX(100%);
+          }
+          to {
+            transform: translateX(-100%);
+          }
+        }
+      `}</style>
     </>
   );
 }

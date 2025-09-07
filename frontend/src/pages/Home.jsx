@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <section className="bg-base-200 py-12 flex flex-col items-center">
+      <section className="bg-base-100 py-12 flex flex-col items-center">
         <h2 className="text-3xl font-bold text-primary mb-8">
           Notices & Updates
         </h2>
@@ -36,17 +36,17 @@ export default function Home() {
           {notices.map((n, i) => (
             <div
               key={i}
-              className="card bg-white shadow-lg border-l-4 border-warning p-6 relative"
+              className="card bg-primary-content shadow-lg border-l-4 border-accent p-6 relative"
             >
               <div className="flex items-center gap-3 mb-2">
                 <span className="text-sm text-gray-500">{n.date}</span>
-                <span className="badge badge-warning text-black">
+                <span className="badge badge-accent text-primary-content">
                   {n.category}
                 </span>
               </div>
               <a
                 href={n.link}
-                className="text-lg font-bold text-primary hover:text-warning"
+                className="text-lg font-bold text-info hover:text-base-content"
               >
                 {n.title}
               </a>
@@ -63,7 +63,7 @@ export default function Home() {
         </div>
 
         <div className="mt-8">
-          <a href="#" className="btn btn-primary text-white rounded-full">
+          <a href="#" className="btn btn-info text-white rounded-full">
             View All Notices & Updates
           </a>
         </div>
