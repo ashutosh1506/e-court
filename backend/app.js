@@ -31,12 +31,10 @@ app.use(express.static("public"));
 // configure cookies now
 app.use(cookieParser());
 
-import clientRoute from "./routes/client.route.js";
-
-<<<<<<< HEAD
+ 
 import clientRoute from "./routes/clientRoute.js"
-=======
+ 
 app.use("/api/v1/clients", clientRoute);
->>>>>>> a46fa140559f56db2d787c936cba371230289b7a
+ 
 
 export { app };
