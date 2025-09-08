@@ -149,5 +149,39 @@ const clientLogout = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "Client logged out successfully"));
 });
 
+const editClientProfile=asyncHandler(async(req,res)=>{
 
-export { registerClient, loginClient ,clientLogout};
+  const loggedInClient = req.user._id;
+  if (!loggedInClient) {
+    throw new ApiError(401, "You must be logged in to edit profile");
+  }
+
+  const { fullName, dob, gender } = req.body;
+
+  const updateFields = {};
+  if (fullName) updateFields.fullName = fullName;
+  if (dob) updateFields.dob = dob;
+  if (gender) updateFields.gender = gender;
+
+  const updatedProfileOfClient = await Client.findByIdAndUpdate(
+    loggedInClient,
+    updateFields,
+    { new: true }
+  ).select("-password -confirm_password -refreshToken");
+
+  if (!updatedProfileOfClient) {
+    throw new ApiError(500, "Something went wrong while updating profile");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, updatedProfileOfClient, "Profile updated successfully"));
+})
+
+
+export { 
+  registerClient, 
+  loginClient ,
+  clientLogout,
+  editClientProfile
+};

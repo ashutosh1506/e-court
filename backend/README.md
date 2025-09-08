@@ -14,7 +14,7 @@
 - Completed Register API for client tested on postman
 - Completed Login API with giving tokens to logged in user 
 - Completed Logout API with JWT verify Middleware
-
+- Completed UpdatedClientProfile API 
 
 # Ashu
 - Database Setup
