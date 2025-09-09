@@ -72,7 +72,9 @@ const registerLawyer = asyncHandler(async (req, res) => {
 
   return res
     .status(201)
-    .json(new ApiResponse(200, createdLawyer, "Lawyer registered successfully"));
+    .json(
+      new ApiResponse(200, createdLawyer, "Lawyer registered successfully")
+    );
 });
 
 // LOGIN
@@ -119,4 +121,56 @@ const loginLawyer = asyncHandler(async (req, res) => {
     );
 });
 
-export { registerLawyer, loginLawyer };
+const lawyerLogout = asyncHandler(async (req, res) => {
+  await Lawyer.findByIdAndUpdate(
+    req.user._id,
+    { $unset: { refreshToken: 1 } },
+    { new: true }
+  );
+
+  const options = {
+    httpOnly: true,
+    secure: true,
+  };
+
+  return res
+    .status(200)
+    .clearCookie("accessToken", options)
+    .clearCookie("refreshToken", options)
+    .json(new ApiResponse(200, {}, "Lawyer logged out successfully"));
+});
+
+const editLawyerProfile = asyncHandler(async (req, res) => {
+  const loggedInLawyer = req.user._id;
+  if (!loggedInLawyer) {
+    throw new ApiError(401, "You must be logged in to edit profile");
+  }
+
+  const { fullName, dob, gender } = req.body;
+
+  const updateFields = {};
+  if (fullName) updateFields.fullName = fullName;
+  if (dob) updateFields.dob = dob;
+  if (gender) updateFields.gender = gender;
+
+  const updatedProfileOfLawyer = await Lawyer.findByIdAndUpdate(
+    loggedInLawyer,
+    updateFields,
+    { new: true }
+  ).select("-password -confirm_password -refreshToken");
+
+  if (!updatedProfileOfLawyer) {
+    throw new ApiError(500, "Something went wrong while updating profile");
+  }
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        updatedProfileOfLawyer,
+        "Profile updated successfully"
+      )
+    );
+});
+export { registerLawyer, loginLawyer, lawyerLogout, editLawyerProfile };

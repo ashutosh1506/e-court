@@ -8,7 +8,7 @@ const Dashboard = () => {
 
   useEffect(() => {
     if (!isLoggedIn) {
-      navigate("/login", { replace: true });
+      navigate("/", { replace: true });
     }
   }, [isLoggedIn, navigate]);
   const closeDrawer = () => {
@@ -22,12 +22,10 @@ const Dashboard = () => {
   return (
     <div>
       <div className="w-full bg-base-100 backdrop-blur-md border border-base-300/40 rounded-md shadow-lg flex items-center justify-between relative px-4 py-2 ">
-        {/* Centered Heading */}
         <h1 className="absolute left-1/2 transform -translate-x-1/2 text-xl md:text-3xl font-bold text-base-content tracking-wide drop-shadow-sm">
           Dashboard
         </h1>
 
-        {/* Drawer Icon (label toggles drawer below) */}
         <label htmlFor="my-drawer-4" className="drawer-button">
           <img
             src="https://img.icons8.com/?size=100&id=q25UylAybCCR&format=png&color=000000"
@@ -37,7 +35,6 @@ const Dashboard = () => {
         </label>
       </div>
 
-      {/* Drawer lives outside the blurred header to avoid stacking context issues */}
       <div className="drawer drawer-end z-[9999]">
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content" />
@@ -114,12 +111,10 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* Child pages render here */}
       <div className="p-6">
         <Outlet />
       </div>
 
-      {/* Modal */}
       <dialog id="my_modal_3" className="modal modal-middle">
         <div className="modal-box">
           <form method="dialog">

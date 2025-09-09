@@ -1,8 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+const savedRole =
+  typeof window !== "undefined" ? localStorage.getItem("role") : null;
+const hasToken =
+  typeof window !== "undefined" ? !!localStorage.getItem("token") : false;
+
 const initialState = {
-  user: "client",
-  isLoggedIn: false,
+  user: savedRole === "lawyer" ? "lawyer" : "client",
+  isLoggedIn: hasToken,
 };
 
 const userSlice = createSlice({
@@ -19,7 +24,7 @@ const userSlice = createSlice({
       state.isLoggedIn = true;
     },
     logout: (state) => {
-      state.user = null;
+      state.user = "client";
       state.isLoggedIn = false;
     },
   },

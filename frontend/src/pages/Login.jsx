@@ -28,6 +28,7 @@ const Login = () => {
         if (response.data.success) {
           const { Accesstoken, lawyer } = response.data.data;
           localStorage.setItem("token", Accesstoken);
+          localStorage.setItem("role", "lawyer");
           if (rememberMe) {
             localStorage.setItem("rememberUser", email);
           }
@@ -46,6 +47,7 @@ const Login = () => {
         if (response.data.success) {
           const { Accesstoken, client } = response.data.data;
           localStorage.setItem("token", Accesstoken);
+          localStorage.setItem("role", "client");
           if (rememberMe) {
             localStorage.setItem("rememberUser", email);
           }

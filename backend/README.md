@@ -9,20 +9,20 @@
 
 - Setup entire Backend
 - Connected databse
-- added utils index.js server.js and env
+- added utils index.js app.js and env
 - added pre hook to check if user has changed password or not and added functions to generate access and refresh tokens
 - Completed Register API for client tested on postman
-- Completed Login API with giving tokens to logged in user 
+- Completed Login API with giving tokens to logged in user
 - Completed Logout API with JWT verify Middleware
-- Completed UpdatedClientProfile API 
+- Completed UpdatedClientProfile API
 
 # Ashu
-- Database Setup
 
+- Database Setup
+- Lawyer Logout API
 
 # Aanya
+
 - Lawyer registration and login system with secure authentication (JWT + bcrypt).
 - Client and Lawyer routes implemented with Express.js and MongoDB.
 - Passwords are securely hashed before storing in the database.
-- Fully responsive frontend with header, navbar, home, and footer sections.
-- Built with Node.js, Express.js, MongoDB, and Postman API testing.

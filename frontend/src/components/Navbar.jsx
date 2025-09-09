@@ -2,6 +2,8 @@ import { useState, useEffect, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { setRoleAsClient, setRoleAsLawyer, logout } from "../utils/userSlice";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -9,10 +11,34 @@ export default function Navbar() {
   const dispatch = useDispatch();
   const { user, isLoggedIn } = useSelector((state) => state.user);
   const navigate = useNavigate();
-  const location = useLocation(); // 👈 get current route
+  const location = useLocation();
 
-  // Check if home page
   const isHome = location.pathname === "/";
+
+  const handleLogout = async () => {
+    try {
+      const backendURL = import.meta.env.VITE_BACKEND_URL;
+      const token = localStorage.getItem("token");
+      const isLawyer = user === "lawyer";
+
+      const url = isLawyer
+        ? `${backendURL}/lawyers/logout`
+        : `${backendURL}/clients/logout`;
+
+      await axios.get(url, {
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+      });
+
+      localStorage.removeItem("token");
+      localStorage.removeItem("role");
+      dispatch(logout());
+      toast.success("Logged out successfully");
+      navigate("/");
+    } catch (error) {
+      console.error(error.response?.data || error.message);
+      toast.error("Failed to logout. Please try again.");
+    }
+  };
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -33,7 +59,6 @@ export default function Navbar() {
             : "sticky top-0 bg-base-200 text-black shadow"
         } `}
     >
-      {/* Logo */}
       <div className="flex items-center gap-3">
         <img
           src="https://thumbs.dreamstime.com/b/justice-scale-grunge-texture-as-symbol-law-vintage-parchment-texture-as-concept-old-legal-system-36389701.jpg"
@@ -42,8 +67,6 @@ export default function Navbar() {
         />
         <span className="text-xl font-bold">Virtual-Portal</span>
       </div>
-
-      {/* Nav Links */}
       <ul className="hidden md:flex gap-8">
         <li>
           <Link to="/" className="hover:text-info">
@@ -89,11 +112,10 @@ export default function Navbar() {
         </div>
       </ul>
 
-      {/* Register/Login or Logout */}
       <div className="relative z-20" ref={dropdownRef}>
         {isLoggedIn ? (
           <button
-            // onClick={handleLogout}
+            onClick={handleLogout}
             className="btn shadow-xl bg-primary hover:bg-primary/80 text-white font-bold"
           >
             Logout
