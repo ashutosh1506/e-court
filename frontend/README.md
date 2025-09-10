@@ -39,6 +39,14 @@
 
 # Devansh
 
+- registration form created
+- login form created
+- header page edited (responsive and css improved)
+- home page edited (responsive and css improved)
+- footer edited and all buttons added (responsive and css improved)
+- navbar edited (responsive and css improved)
+- sidebar added to nabvar for mobile view
+
 # Yuvan
 
 - ContacUs Page (Map working page is responsive)
