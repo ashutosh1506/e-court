@@ -28,7 +28,7 @@ export default function Home() {
   return (
     <>
       <Header />
-      <section className="bg-base-100 py-12 flex flex-col items-center">
+      <section className="bg-base-100 py-12 flex flex-col items-center mx-2">
         <h2 className="text-3xl font-bold text-primary mb-8">
           Notices & Updates
         </h2>

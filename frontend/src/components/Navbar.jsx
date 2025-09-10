@@ -4,12 +4,16 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { setRoleAsClient, setRoleAsLawyer, logout } from "../utils/userSlice";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { Menu, X } from "lucide-react"; // hamburger & close icons
+import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
-  const [open, setOpen] = useState(false); // sidebar state
-  const [dropdownOpen, setDropdownOpen] = useState(false); // desktop login dropdown
+  const [open, setOpen] = useState(false);
+  const [renderSidebar, setRenderSidebar] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef();
+  const triggerBtnRef = useRef();
+  const closeBtnRef = useRef();
+  const closeTimeoutRef = useRef();
   const dispatch = useDispatch();
   const { user, isLoggedIn } = useSelector((state) => state.user);
   const navigate = useNavigate();
@@ -52,9 +56,44 @@ export default function Navbar() {
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
 
+  useEffect(() => {
+    if (!renderSidebar) return;
+    const handleKey = (e) => {
+      if (e.key === "Escape") closeSidebar();
+    };
+    document.addEventListener("keydown", handleKey);
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", handleKey);
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [renderSidebar]);
+
+  const openSidebar = () => {
+    if (renderSidebar) return;
+    if (closeTimeoutRef.current) {
+      clearTimeout(closeTimeoutRef.current);
+      closeTimeoutRef.current = undefined;
+    }
+    setRenderSidebar(true);
+    requestAnimationFrame(() => {
+      setOpen(true);
+      requestAnimationFrame(() => closeBtnRef.current?.focus());
+    });
+  };
+  const closeSidebar = () => {
+    setOpen(false);
+    if (closeTimeoutRef.current) clearTimeout(closeTimeoutRef.current);
+    closeTimeoutRef.current = setTimeout(() => {
+      setRenderSidebar(false);
+      triggerBtnRef.current?.focus();
+      closeTimeoutRef.current = undefined;
+    }, 300);
+  };
+
   return (
     <>
-      {/* Navbar */}
       <nav
         className={`navbar w-full z-50 px-6 py-3 flex justify-between items-center transition-colors duration-300 
           ${
@@ -63,7 +102,6 @@ export default function Navbar() {
               : "sticky top-0 bg-base-200 text-black shadow"
           } `}
       >
-        {/* Logo */}
         <div className="flex items-center gap-3">
           <img
             src="https://thumbs.dreamstime.com/b/justice-scale-grunge-texture-as-symbol-law-vintage-parchment-texture-as-concept-old-legal-system-36389701.jpg"
@@ -72,8 +110,6 @@ export default function Navbar() {
           />
           <span className="text-xl font-bold">Virtual-Portal</span>
         </div>
-
-        {/* Desktop Links */}
         <ul className="hidden md:flex gap-8 items-center">
           <li>
             <Link to="/" className="hover:text-info">
@@ -123,13 +159,11 @@ export default function Navbar() {
             </ul>
           </div>
         </ul>
-
-        {/* Desktop Auth */}
         <div className="hidden md:block relative z-20" ref={dropdownRef}>
           {isLoggedIn ? (
             <button
               onClick={handleLogout}
-              className="btn shadow-xl bg-primary hover:bg-primary/80 text-white font-bold"
+              className="btn  bg-primary hover:bg-primary/80 text-white border-0 font-bold"
             >
               Logout
             </button>
@@ -142,10 +176,10 @@ export default function Navbar() {
                 Register/Login ▼
               </button>
               {dropdownOpen && (
-                <div className="absolute right-0 mt-2 bg-white shadow-lg rounded-lg w-40">
+                <div className="absolute left-0 right-0 mt-2 bg-white shadow-lg rounded-lg">
                   <Link
                     to="/login"
-                    className="block px-4 py-2 text-primary hover:bg-base-200 hover:text-black"
+                    className="block px-4 py-2 text-primary hover:bg-primary/10 hover:rounded-lg"
                     onClick={() => {
                       setDropdownOpen(false);
                       dispatch(setRoleAsLawyer());
@@ -155,7 +189,7 @@ export default function Navbar() {
                   </Link>
                   <Link
                     to="/login"
-                    className="block px-4 py-2 text-primary hover:bg-base-200 hover:text-black"
+                    className="block px-4 py-2 text-primary hover:bg-primary/10 hover:rounded-lg"
                     onClick={() => {
                       setDropdownOpen(false);
                       dispatch(setRoleAsClient());
@@ -168,71 +202,113 @@ export default function Navbar() {
             </>
           )}
         </div>
-
-        {/* Mobile Hamburger */}
         <button
           className="md:hidden text-2xl"
-          onClick={() => setOpen(true)}
+          onClick={openSidebar}
           aria-label="Open Menu"
+          ref={triggerBtnRef}
         >
           <Menu />
         </button>
       </nav>
-
-      {/* Mobile Sidebar */}
-      {open && (
-        <div className="fixed inset-0 bg-black/50 z-50 flex">
-          <div className="w-64 bg-base-100 shadow-lg h-full p-6 flex flex-col gap-6">
-            {/* Close button */}
+      {/* Sidebar */}
+      {renderSidebar && (
+        <div
+          className={`fixed inset-0 z-50 flex ${
+            open ? "pointer-events-auto" : "pointer-events-none"
+          }`}
+          role="presentation"
+        >
+          <div
+            className={`absolute inset-0 bg-black/50 transition-opacity duration-300 ${
+              open ? "opacity-100" : "opacity-0"
+            }`}
+            onClick={closeSidebar}
+            aria-hidden="true"
+          />
+          <div
+            className={`relative w-64 bg-base-100 shadow-lg h-full p-6 flex flex-col gap-6 transform transition-transform duration-300 ease-in-out ${
+              open ? "translate-x-0" : "-translate-x-full"
+            }`}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Mobile Menu"
+          >
             <button
-              className="self-end text-2xl"
-              onClick={() => setOpen(false)}
+              className="self-end text-2xl cursor-pointer"
+              onClick={closeSidebar}
               aria-label="Close Menu"
+              ref={closeBtnRef}
             >
               <X />
             </button>
 
-            {/* Links */}
-            <Link to="/" onClick={() => setOpen(false)} className="hover:text-info">
+            <Link to="/" onClick={closeSidebar} className="hover:text-info">
               Home
             </Link>
-            <Link to="/dashboard" onClick={() => setOpen(false)} className="hover:text-info">
+            <Link
+              to="/dashboard"
+              onClick={closeSidebar}
+              className="hover:text-info"
+            >
               Dashboard
             </Link>
-            <Link to="/services" onClick={() => setOpen(false)} className="hover:text-info">
+            <Link
+              to="/services"
+              onClick={closeSidebar}
+              className="hover:text-info"
+            >
               Services
             </Link>
-            <Link to="/about" onClick={() => setOpen(false)} className="hover:text-info">
+            <Link
+              to="/about"
+              onClick={closeSidebar}
+              className="hover:text-info"
+            >
               About
             </Link>
-            <Link to="/contact" onClick={() => setOpen(false)} className="hover:text-info">
+            <Link
+              to="/contact"
+              onClick={closeSidebar}
+              className="hover:text-info"
+            >
               Contact Us
             </Link>
-
-            {/* Courts Dropdown (simple expand in sidebar) */}
             <details>
-              <summary className="cursor-pointer hover:text-info">Courts</summary>
-              <div className="ml-4 mt-2 flex flex-col gap-2">
-                <Link to="/supreme-court" onClick={() => setOpen(false)}>
+              <summary className="cursor-pointer hover:text-info">
+                Courts
+              </summary>
+              <div className="ml-4 mt-2 flex flex-col gap-2 ">
+                <Link
+                  to="/supreme-court"
+                  className="hover:text-black/60"
+                  onClick={closeSidebar}
+                >
                   Supreme Court
                 </Link>
-                <Link to="/high-court" onClick={() => setOpen(false)}>
+                <Link
+                  to="/high-court"
+                  className="hover:text-black/60"
+                  onClick={closeSidebar}
+                >
                   High Court
                 </Link>
-                <Link to="/district-court" onClick={() => setOpen(false)}>
+                <Link
+                  to="/district-court"
+                  className="hover:text-black/60"
+                  onClick={closeSidebar}
+                >
                   District Court
                 </Link>
               </div>
             </details>
-
-            {/* Auth Buttons */}
             {isLoggedIn ? (
               <button
                 onClick={() => {
                   handleLogout();
-                  setOpen(false);
+                  closeSidebar();
                 }}
-                className="btn shadow-xl bg-primary hover:bg-primary/80 text-white font-bold mt-4"
+                className="btn shadow-xl bg-primary hover:bg-primary/80 text-white font-bold w-40"
               >
                 Logout
               </button>
@@ -242,9 +318,9 @@ export default function Navbar() {
                   onClick={() => {
                     dispatch(setRoleAsLawyer());
                     navigate("/login");
-                    setOpen(false);
+                    closeSidebar();
                   }}
-                  className="btn border-2 border-neutral text-black font-bold"
+                  className="btn shadow-xl bg-primary hover:bg-primary/80 text-white font-bold w-40"
                 >
                   Login as Lawyer
                 </button>
@@ -252,20 +328,15 @@ export default function Navbar() {
                   onClick={() => {
                     dispatch(setRoleAsClient());
                     navigate("/login");
-                    setOpen(false);
+                    closeSidebar();
                   }}
-                  className="btn border-2 border-neutral text-black font-bold"
+                  className="btn shadow-xl bg-primary hover:bg-primary/80 text-white font-bold w-40 -mt-4"
                 >
                   Login as Client
                 </button>
               </>
             )}
           </div>
-          {/* Click outside closes sidebar */}
-          <div
-            className="flex-1"
-            onClick={() => setOpen(false)}
-          ></div>
         </div>
       )}
     </>
