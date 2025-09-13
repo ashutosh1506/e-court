@@ -196,7 +196,6 @@ const getClientDetails = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, client, "Client details fetched successfully"));
 });
 
-// ✅ Single export at the end
 export {
   registerClient,
   loginClient,

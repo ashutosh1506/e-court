@@ -173,10 +173,7 @@ const editLawyerProfile = asyncHandler(async (req, res) => {
       )
     );
 });
-// export { registerLawyer, loginLawyer, lawyerLogout, editLawyerProfile };
 
-
-// FETCH LAWYER DETAILS
 const getLawyerDetails = asyncHandler(async (req, res) => {
   const { id } = req.params; 
   const lawyerId = id || req.user?._id;
@@ -194,7 +191,6 @@ const getLawyerDetails = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, lawyer, "Lawyer details fetched successfully"));
 });
 
-// ✅ Export all
 export { 
   registerLawyer, 
   loginLawyer, 
