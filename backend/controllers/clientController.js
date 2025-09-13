@@ -9,7 +9,7 @@ const generateAccessAndRefreshToken = async (userId) => {
     const user = await Client.findById(userId);
     const Accesstoken = user.generateAccessToken();
     const RefeshToken = user.generateRefreshToken();
-    user.RefeshToken = RefeshToken;
+    user.refreshToken = RefeshToken;   // ✅ match schema field (lowercase)
     await user.save({ validateBeforeSave: false });
 
     return { Accesstoken, RefeshToken };
@@ -144,13 +144,12 @@ const clientLogout = asyncHandler(async (req, res) => {
 
   return res
     .status(200)
-    .clearCookie('accessToken', options)
-    .clearCookie('refreshToken', options)
+    .clearCookie("accessToken", options)
+    .clearCookie("refreshToken", options)
     .json(new ApiResponse(200, {}, "Client logged out successfully"));
 });
 
-const editClientProfile=asyncHandler(async(req,res)=>{
-
+const editClientProfile = asyncHandler(async (req, res) => {
   const loggedInClient = req.user._id;
   if (!loggedInClient) {
     throw new ApiError(401, "You must be logged in to edit profile");
@@ -175,13 +174,33 @@ const editClientProfile=asyncHandler(async(req,res)=>{
 
   return res
     .status(200)
-    .json(new ApiResponse(200, updatedProfileOfClient, "Profile updated successfully"));
-})
+    .json(
+      new ApiResponse(200, updatedProfileOfClient, "Profile updated successfully")
+    );
+});
 
+const getClientDetails = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+  const clientId = id || req.user?._id;
 
-export { 
-  registerClient, 
-  loginClient ,
+  const client = await Client.findById(clientId).select(
+    "-password -confirm_password -refreshToken"
+  );
+
+  if (!client) {
+    throw new ApiError(404, "Client not found");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, client, "Client details fetched successfully"));
+});
+
+// ✅ Single export at the end
+export {
+  registerClient,
+  loginClient,
   clientLogout,
-  editClientProfile
+  editClientProfile,
+  getClientDetails,
 };

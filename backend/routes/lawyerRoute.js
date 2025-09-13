@@ -4,12 +4,22 @@ import {
   lawyerLogout,
   loginLawyer,
   registerLawyer,
+  getLawyerDetails,
 } from "../controllers/lawyerController.js";
 import { verifyJWT } from "../middlewares/authMiddleware.js";
+
 const router = Router();
 
-router.route("/register").post(registerLawyer);
-router.route("/login").post(loginLawyer);
-router.route("/logout").get(verifyJWT, lawyerLogout);
-router.route("/editLawyerProfile").put(verifyJWT, editLawyerProfile);
+// Public routes
+router.post("/register", registerLawyer);
+router.post("/login", loginLawyer);
+
+// Protected routes
+router.get("/logout", verifyJWT, lawyerLogout);
+router.put("/editLawyerProfile", verifyJWT, editLawyerProfile);
+
+// Fetch lawyer details
+router.get("/details", verifyJWT, getLawyerDetails);
+router.get("/details/:id", verifyJWT, getLawyerDetails);
+
 export default router;

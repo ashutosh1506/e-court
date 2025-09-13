@@ -173,4 +173,32 @@ const editLawyerProfile = asyncHandler(async (req, res) => {
       )
     );
 });
-export { registerLawyer, loginLawyer, lawyerLogout, editLawyerProfile };
+// export { registerLawyer, loginLawyer, lawyerLogout, editLawyerProfile };
+
+
+// FETCH LAWYER DETAILS
+const getLawyerDetails = asyncHandler(async (req, res) => {
+  const { id } = req.params; 
+  const lawyerId = id || req.user?._id;
+
+  const lawyer = await Lawyer.findById(lawyerId).select(
+    "-password -confirm_password -refreshToken"
+  );
+
+  if (!lawyer) {
+    throw new ApiError(404, "Lawyer not found");
+  }
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, lawyer, "Lawyer details fetched successfully"));
+});
+
+// ✅ Export all
+export { 
+  registerLawyer, 
+  loginLawyer, 
+  lawyerLogout, 
+  editLawyerProfile,
+  getLawyerDetails
+};
