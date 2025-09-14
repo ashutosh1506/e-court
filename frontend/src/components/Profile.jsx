@@ -1,12 +1,15 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
+import { setClientProfile, setLawyerProfile } from "../utils/userSlice";
 
 const Profile = () => {
   const [client, setClient] = useState(null);
 
   const { user } = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+  const { clientProfile, lawyerProfile } = useSelector((state) => state.user);
   const backendURL = import.meta.env.VITE_BACKEND_URL;
 
   const states = [
@@ -60,22 +63,22 @@ const Profile = () => {
       if (user === "client") {
         const clientId = localStorage.getItem("clientId");
         res = await axios.get(backendURL + `/clients/details/${clientId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
       } else {
         const lawyerId = localStorage.getItem("lawyerId");
         res = await axios.get(backendURL + `/lawyers/details/${lawyerId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` },
         });
       }
 
-      // console.log(res.data.data);
       const profile = res.data.data;
       setClient(profile);
+      if (user === "client") {
+        dispatch(setClientProfile(profile));
+      } else {
+        dispatch(setLawyerProfile(profile));
+      }
       setFormData({
         fullName: profile.fullName || "",
         dob: profile.dob ? profile.dob.slice(0, 10) : "",
@@ -98,29 +101,24 @@ const Profile = () => {
         response = await axios.put(
           backendURL + "/lawyers/editLawyerProfile",
           formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          { headers: { Authorization: `Bearer ${token}` } }
         );
       } else {
         response = await axios.put(
           backendURL + "/clients/editClientProfile",
           formData,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
+          { headers: { Authorization: `Bearer ${token}` } }
         );
       }
 
       if (response.data.success) {
         const updated = response.data.data;
-        // Update profile card immediately
         setClient(updated);
-        // Sync form with updated values
+        if (user === "client") {
+          dispatch(setClientProfile(updated));
+        } else {
+          dispatch(setLawyerProfile(updated));
+        }
         setFormData({
           fullName: updated.fullName || "",
           dob: updated.dob ? updated.dob.slice(0, 10) : "",
@@ -139,7 +137,20 @@ const Profile = () => {
     }
   };
   useEffect(() => {
-    getUserDetails();
+    const cached = user === "client" ? clientProfile : lawyerProfile;
+    if (cached) {
+      setClient(cached);
+      setFormData({
+        fullName: cached.fullName || "",
+        dob: cached.dob ? cached.dob.slice(0, 10) : "",
+        phone: cached.phone || "",
+        barAssociationNo: cached.barAssociationNo || "",
+        gender: cached.gender || "",
+        state: cached.state || "",
+      });
+    } else {
+      getUserDetails();
+    }
   }, []);
 
   if (!client) {

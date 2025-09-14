@@ -8,6 +8,8 @@ const hasToken =
 const initialState = {
   user: savedRole === "lawyer" ? "lawyer" : "client",
   isLoggedIn: hasToken,
+  clientProfile: null,
+  lawyerProfile: null,
 };
 
 const userSlice = createSlice({
@@ -26,10 +28,24 @@ const userSlice = createSlice({
     logout: (state) => {
       state.user = "client";
       state.isLoggedIn = false;
+      state.clientProfile = null;
+      state.lawyerProfile = null;
+    },
+    setClientProfile: (state, action) => {
+      state.clientProfile = action.payload;
+    },
+    setLawyerProfile: (state, action) => {
+      state.lawyerProfile = action.payload;
     },
   },
 });
 
-export const { setRoleAsLawyer, setRoleAsClient, setLogin, logout } =
-  userSlice.actions;
+export const {
+  setRoleAsLawyer,
+  setRoleAsClient,
+  setLogin,
+  logout,
+  setClientProfile,
+  setLawyerProfile,
+} = userSlice.actions;
 export default userSlice.reducer;
