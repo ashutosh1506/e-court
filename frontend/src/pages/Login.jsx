@@ -6,8 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { setLogin, setRoleAsClient, setRoleAsLawyer } from "../utils/userSlice";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("ashu@gmail.com");
+  const [password, setPassword] = useState("abcd@1234");
   const [rememberMe, setRememberMe] = useState(false);
   const backendURL = import.meta.env.VITE_BACKEND_URL;
 
@@ -26,8 +26,10 @@ const Login = () => {
         });
 
         if (response.data.success) {
+          // console.log(response.data.data);
           const { Accesstoken, lawyer } = response.data.data;
           localStorage.setItem("token", Accesstoken);
+          localStorage.setItem("lawyerId", response.data.data.lawyer._id);
           localStorage.setItem("role", "lawyer");
           if (rememberMe) {
             localStorage.setItem("rememberUser", email);
@@ -47,6 +49,7 @@ const Login = () => {
         if (response.data.success) {
           const { Accesstoken, client } = response.data.data;
           localStorage.setItem("token", Accesstoken);
+          localStorage.setItem("clientId", response.data.data.client._id);
           localStorage.setItem("role", "client");
           if (rememberMe) {
             localStorage.setItem("rememberUser", email);

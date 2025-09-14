@@ -9,7 +9,7 @@ const generateAccessAndRefreshToken = async (userId) => {
     const user = await Client.findById(userId);
     const Accesstoken = user.generateAccessToken();
     const RefeshToken = user.generateRefreshToken();
-    user.refreshToken = RefeshToken;   // ✅ match schema field (lowercase)
+    user.refreshToken = RefeshToken; // ✅ match schema field (lowercase)
     await user.save({ validateBeforeSave: false });
 
     return { Accesstoken, RefeshToken };
@@ -155,12 +155,14 @@ const editClientProfile = asyncHandler(async (req, res) => {
     throw new ApiError(401, "You must be logged in to edit profile");
   }
 
-  const { fullName, dob, gender } = req.body;
+  const { fullName, dob, gender, phone, state } = req.body;
 
   const updateFields = {};
   if (fullName) updateFields.fullName = fullName;
   if (dob) updateFields.dob = dob;
   if (gender) updateFields.gender = gender;
+  if (phone) updateFields.phone = phone;
+  if (state) updateFields.state = state;
 
   const updatedProfileOfClient = await Client.findByIdAndUpdate(
     loggedInClient,
@@ -175,7 +177,11 @@ const editClientProfile = asyncHandler(async (req, res) => {
   return res
     .status(200)
     .json(
-      new ApiResponse(200, updatedProfileOfClient, "Profile updated successfully")
+      new ApiResponse(
+        200,
+        updatedProfileOfClient,
+        "Profile updated successfully"
+      )
     );
 });
 

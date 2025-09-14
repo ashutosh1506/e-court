@@ -28,6 +28,8 @@
 - Client Register/Login successfully integrated
 - Lawyer Register/Login successfully integrated
 - Client and Lawyer Logout API Integrated
+- Fetch User Details API Intergrated
+- Update User Details API Intergrated
 
 # Aanya
 

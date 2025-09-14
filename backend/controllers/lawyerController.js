@@ -146,12 +146,15 @@ const editLawyerProfile = asyncHandler(async (req, res) => {
     throw new ApiError(401, "You must be logged in to edit profile");
   }
 
-  const { fullName, dob, gender } = req.body;
+  const { fullName, dob, gender, phone, state, barAssociationNo } = req.body;
 
   const updateFields = {};
   if (fullName) updateFields.fullName = fullName;
   if (dob) updateFields.dob = dob;
   if (gender) updateFields.gender = gender;
+  if (phone) updateFields.phone = phone;
+  if (state) updateFields.state = state;
+  if (barAssociationNo) updateFields.barAssociationNo = barAssociationNo;
 
   const updatedProfileOfLawyer = await Lawyer.findByIdAndUpdate(
     loggedInLawyer,
@@ -175,7 +178,7 @@ const editLawyerProfile = asyncHandler(async (req, res) => {
 });
 
 const getLawyerDetails = asyncHandler(async (req, res) => {
-  const { id } = req.params; 
+  const { id } = req.params;
   const lawyerId = id || req.user?._id;
 
   const lawyer = await Lawyer.findById(lawyerId).select(
@@ -191,10 +194,10 @@ const getLawyerDetails = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, lawyer, "Lawyer details fetched successfully"));
 });
 
-export { 
-  registerLawyer, 
-  loginLawyer, 
-  lawyerLogout, 
+export {
+  registerLawyer,
+  loginLawyer,
+  lawyerLogout,
   editLawyerProfile,
-  getLawyerDetails
+  getLawyerDetails,
 };
