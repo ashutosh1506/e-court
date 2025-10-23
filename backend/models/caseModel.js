@@ -40,4 +40,4 @@ const caseSchema = new Schema({
 })
 
 
-export const caseModel = mongoose.model("Case", caseSchema);
+export const Case = mongoose.model("Case", caseSchema);
