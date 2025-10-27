@@ -30,6 +30,7 @@
 - Client and Lawyer Logout API Integrated
 - Fetch User Details API Intergrated
 - Update User Details API Intergrated
+- Integrated video meeting room feature with ZegoCloud
 
 # Aanya
 

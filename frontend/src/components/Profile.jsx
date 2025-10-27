@@ -216,7 +216,7 @@ const Profile = () => {
             <h2 className="text-2xl font-bold text-center text-secondary mb-6">
               Edit Your Profile
             </h2>
-            <form className="space-y-4">
+            <form className="space-y-2">
               <div className="form-control">
                 <label className="label font-semibold">Name</label>
                 <input

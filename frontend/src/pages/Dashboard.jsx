@@ -1,16 +1,28 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, Outlet, useNavigate } from "react-router-dom";
+
+function randomID(len = 7) {
+  const chars =
+    "12345qwertyuiopasdfgh67890jklmnbvcxzMNBVCZXASDQWERTYHGFUIOLKJP";
+  let result = "";
+  for (let i = 0; i < len; i++) {
+    result += chars.charAt(Math.floor(Math.random() * chars.length));
+  }
+  return result;
+}
 
 const Dashboard = () => {
   const { user, isLoggedIn } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const [roomID, setRoomID] = useState("");
 
   useEffect(() => {
     if (!isLoggedIn) {
       navigate("/", { replace: true });
     }
   }, [isLoggedIn, navigate]);
+
   const closeDrawer = () => {
     const el = document.getElementById("my-drawer-4");
     if (el && "checked" in el) {
@@ -18,7 +30,31 @@ const Dashboard = () => {
     }
   };
 
+  const closeModal = () => {
+    const dlg = document.getElementById("my_modal_3");
+    if (dlg && typeof dlg.close === "function") {
+      dlg.close();
+    } else {
+      dlg?.removeAttribute("open");
+    }
+  };
+
+  const handleJoinMeeting = () => {
+    if (roomID.trim()) {
+      closeModal();
+      navigate(`/dashboard/meeting-room?roomID=${roomID.trim()}`);
+    } else {
+      alert("Please enter a Meeting ID to join.");
+    }
+  };
+
+  const handleStartMeeting = () => {
+    closeModal();
+    navigate(`/dashboard/meeting-room?roomID=${randomID()}`);
+  };
+
   if (!isLoggedIn) return null;
+
   return (
     <div>
       <div className="w-full bg-base-100 backdrop-blur-md border border-base-300/40 rounded-md shadow-lg flex items-center justify-between relative px-4 py-2 ">
@@ -115,24 +151,43 @@ const Dashboard = () => {
         <Outlet />
       </div>
 
+      {/* Video Conference Modal */}
       <dialog id="my_modal_3" className="modal modal-middle">
         <div className="modal-box">
           <form method="dialog">
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">
+            <button
+              className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+              type="button"
+              onClick={closeModal}
+            >
               ✕
             </button>
           </form>
-          <h3 className="font-bold text-lg">Hello!</h3>
-          <p className="py-4">
-            To join your online video conferencing hearing click the button
-            below
+          <h3 className="font-bold text-lg text-center">Hello!</h3>
+          <p className="py-4 text-center">
+            To join your online video conferencing, enter the Meeting ID below
+            or start a new meeting.
           </p>
-          <p>You will require to provide your:</p>
-          <p>1. Name</p>
-          <p>2. Room Password</p>
-          <p>3. Your FaceID</p>
-          <button className="btn btn-primary block mx-auto mt-6">
+          <input
+            type="text"
+            className="input input-bordered w-full mt-3"
+            placeholder="Enter Meeting ID"
+            value={roomID}
+            onChange={(e) => setRoomID(e.target.value)}
+          />
+          <button
+            className="btn btn-primary block mx-auto mt-5 pt-2"
+            type="button"
+            onClick={handleJoinMeeting}
+          >
             Join Hearing
+          </button>
+          <button
+            className="btn btn-secondary block mx-auto mt-2 pt-2"
+            type="button"
+            onClick={handleStartMeeting}
+          >
+            Start Hearing
           </button>
         </div>
       </dialog>
