@@ -44,6 +44,7 @@ export default function MeetingRoom() {
       scenario: {
         mode: ZegoUIKitPrebuilt.GroupCall,
       },
+      layout: "Auto",
     });
 
     return () => {
@@ -55,9 +56,8 @@ export default function MeetingRoom() {
 
   return (
     <div
-      className="myCallContainer"
+      className="relative w-full h-[90vh] bg-black overflow-hidden rounded-lg "
       ref={meetingRef}
-      style={{ width: "97vw", height: "90vh" }}
     ></div>
   );
 }
