@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import home_image from "../assets/home_image.png";
 
 export default function Header() {
   const messages = [
@@ -24,8 +25,7 @@ export default function Header() {
         className="relative flex items-center justify-center text-center text-white 
                    h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[90vh] px-4"
         style={{
-          backgroundImage:
-            "url('https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/abf8996f-352b-5cf2-940d-abc4fd77599d/aea87596-f96d-554b-b6b6-3f49ba6ea7ca.jpg')",
+          backgroundImage: `url(${home_image})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
