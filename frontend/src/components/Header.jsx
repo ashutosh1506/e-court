@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   const messages = [
@@ -41,9 +42,13 @@ export default function Header() {
             Digital transformation of the Indian Judiciary. Access court
             services, file cases, and track proceedings online.
           </p>
-          <button className="btn btn-accent text-neutral font-bold text-sm sm:text-base md:text-lg px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full shadow-lg hover:scale-105 hover:shadow-info transition">
+
+          <Link
+            to="/dashboard"
+            className="btn btn-accent text-neutral font-bold text-sm sm:text-base md:text-lg px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full shadow-lg hover:scale-105 hover:shadow-info transition"
+          >
             Access e-Court Services
-          </button>
+          </Link>
         </div>
       </section>
 
