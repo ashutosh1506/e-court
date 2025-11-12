@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Footer() {
   return (
     <>
@@ -37,25 +39,37 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-secondary">
+              <Link
+                to="/contact"
+                className="hover:text-secondary"
+                onClick={() => window.scrollTo(0, 0)}
+              >
                 Contact Us
-              </a>
+              </Link>
             </li>
             <li>
-              <a href="#" className="hover:text-secondary">
+              <Link
+                to="/about"
+                className="hover:text-secondary"
+                onClick={() => window.scrollTo(0, 0)}
+              >
                 About Us
-              </a>
+              </Link>
             </li>
-            <li>
-              <a href="#" className="hover:text-secondary">
+            {/* <li>
+              <Link
+                to="/about"
+                className="hover:text-secondary"
+                onClick={() => window.scrollTo(0, 0)}
+              >
                 Terms and Conditions
-              </a>
+              </Link>
             </li>
             <li>
               <a href="#" className="hover:text-secondary">
                 Site Map
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
 
@@ -64,21 +78,29 @@ export default function Footer() {
           <h3 className="text-info font-bold mb-3">e-Court Services</h3>
           <ul className="space-y-2">
             <li>
-              <a href="#" className="hover:text-secondary">
+              <Link
+                to="/dashboard/case-status"
+                className="hover:text-secondary"
+                onClick={() => window.scrollTo(0, 0)}
+              >
                 Case Status Inquiry
-              </a>
+              </Link>
             </li>
-            <li>
+            {/* <li>
               <a href="#" className="hover:text-secondary">
                 e-Filing Services
               </a>
-            </li>
+            </li> */}
             <li>
-              <a href="#" className="hover:text-secondary">
+              <Link
+                to="/dashboard/meeting-room"
+                className="hover:text-secondary"
+                onClick={() => window.scrollTo(0, 0)}
+              >
                 Virtual Court Hearings
-              </a>
+              </Link>
             </li>
-            <li>
+            {/* <li>
               <a href="#" className="hover:text-secondary">
                 Court Fee Payment
               </a>
@@ -87,7 +109,7 @@ export default function Footer() {
               <a href="#" className="hover:text-secondary">
                 Document Verification
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
 
@@ -181,7 +203,7 @@ export default function Footer() {
       {/* Bottom */}
       <div className="bg-primary text-success-content flex flex-col md:flex-row justify-between items-center px-8 py-3 text-sm">
         <p>@Virtual © e-Court Portal, for online hearing conference.</p>
-        <div className="flex gap-4 mt-2 md:mt-0">
+        {/* <div className="flex gap-4 mt-2 md:mt-0">
           <a href="#" className="hover:text-warning">
             Privacy Policy
           </a>
@@ -191,7 +213,7 @@ export default function Footer() {
           <a href="#" className="hover:text-warning">
             RTI
           </a>
-        </div>
+        </div> */}
       </div>
     </>
   );

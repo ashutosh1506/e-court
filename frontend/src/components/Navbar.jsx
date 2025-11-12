@@ -132,7 +132,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link to="/contact" className="hover:text-info">
+            <Link to="/contact" className="hover:text-info ">
               Contact Us
             </Link>
           </li>
@@ -141,7 +141,7 @@ export default function Navbar() {
               tabIndex={0}
               className="cursor-pointer hover:text-info transition"
             >
-              Courts ↓
+              <span className="text-lg ">Courts ↓</span>
             </label>
             <ul
               tabIndex={0}

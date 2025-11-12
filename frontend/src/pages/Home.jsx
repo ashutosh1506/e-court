@@ -63,7 +63,11 @@ export default function Home() {
         </div>
 
         <div className="mt-8">
-          <a href="#" className="btn btn-info text-white rounded-full">
+          <a
+            href="https://informatics.nic.in/"
+            target="blank"
+            className="btn btn-info text-white rounded-full"
+          >
             View All Notices & Updates
           </a>
         </div>

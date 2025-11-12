@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.9.0",
     "@tailwindcss/vite": "^4.1.12",
     "@tensorflow/tfjs": "^4.22.0",
+    "@zegocloud/zego-uikit-prebuilt": "^2.17.0",
     "axios": "^1.11.0",
     "chart.js": "^4.5.0",
     "daisyui": "^5.1.6",
