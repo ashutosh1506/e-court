@@ -2,7 +2,7 @@ import { Case } from "../models/caseModel.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
- 
+
 
 const searchByCnrNumber = asyncHandler(async (req, res) => {
   const cnrNumber = req.body;
@@ -83,7 +83,51 @@ const createCase = asyncHandler(async (req, res) => {
     .json(new ApiResponse(201, newCase, "New case registered successfully"));
 });
 
+const fetchCaseDetails = asyncHandler(async (req, res) => {
+  const { cnrNumber } = req.body;
 
-export { searchByCnrNumber, createCase };
+  if (!cnrNumber?.trim()) {
+    throw new ApiError(400, "CNR number is required");
+  }
+
+  const cnrPattern = /^[A-Za-z0-9]{16}$/;
+  if (!cnrPattern.test(cnrNumber)) {
+    throw new ApiError(
+      400,
+      "Invalid CNR format — must be a 16-character alphanumeric value"
+    );
+  }
+
+
+  const caseData = await Case.findOne({ cnrNumber: cnrNumber.toUpperCase() }).lean();
+
+
+  if (!caseData) {
+    throw new ApiError(404, "No case found with the provided CNR number");
+  }
+
+
+  const caseDetails = {
+    caseType: caseData.caseType,
+    cnrNumber: caseData.cnrNumber,
+    court: caseData.court,
+    petitionerName: caseData.petitioner?.fullName || "N/A",
+    petitionerAddress: caseData.petitioner?.address || "N/A",
+    petitionerContact: caseData.petitioner?.contactNumber || "N/A",
+    advocateName: caseData.advocate?.name || "N/A",
+    advocateBarRegNo: caseData.advocate?.barCouncilRegNo || "N/A",
+    advocateContact: caseData.advocate?.contactNumber || "N/A",
+    filingDate: caseData.createdAt,
+    status: caseData.status,
+  };
+
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, caseDetails, "Case details fetched successfully"));
+});
+
+
+export { searchByCnrNumber, createCase ,fetchCaseDetails };
 
 
