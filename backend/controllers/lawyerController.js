@@ -193,11 +193,26 @@ const getLawyerDetails = asyncHandler(async (req, res) => {
     .status(200)
     .json(new ApiResponse(200, lawyer, "Lawyer details fetched successfully"));
 });
+const getAllLawyers = asyncHandler(async (req, res) => {
+  const lawyers = await Lawyer.find().select(
+    "-password -confirm_password -refreshToken"
+  );
 
+  if (!lawyers || lawyers.length === 0) {
+    throw new ApiError(404, "No lawyers found in the database");
+  }
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(200, lawyers, "All lawyer details fetched successfully")
+    );
+});
 export {
   registerLawyer,
   loginLawyer,
   lawyerLogout,
   editLawyerProfile,
   getLawyerDetails,
+  getAllLawyers,
 };

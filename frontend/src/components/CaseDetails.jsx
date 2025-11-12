@@ -1,6 +1,12 @@
 import React from "react";
 import { motion } from "framer-motion";
 
+const formatDate = (dateStr) => {
+  if (!dateStr) return "Not Available";
+  const date = new Date(dateStr);
+  return isNaN(date) ? "Invalid Date" : date.toLocaleDateString();
+};
+
 const CaseDetails = ({ caseData }) => {
   if (!caseData) {
     return (
@@ -19,26 +25,27 @@ const CaseDetails = ({ caseData }) => {
         initial={{ opacity: 0, scale: 0.9, y: 40 }}
         animate={{ opacity: 1, scale: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="bg-white/60 backdrop-blur-lg border border-white/30 shadow-2xl rounded-3xl w-full max-w-2xl p-8"
+        className="bg-white/70 backdrop-blur-lg border border-white/40 shadow-2xl rounded-3xl w-full max-w-3xl p-8"
       >
-        <h1 className="text-4xl font-extrabold text-center text-blue-800 mb-6">
+        <h1 className="text-4xl font-extrabold text-center text-blue-800 mb-8">
           🏛️ Case Details
         </h1>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 text-gray-800">
+          {/* Case Info */}
           <div className="flex flex-col">
             <span className="text-sm font-medium text-gray-500">Case Type</span>
-            <span className="text-lg font-semibold">{caseData.caseType}</span>
+            <span className="text-lg font-semibold">
+              {caseData.caseType || "Not Available"}
+            </span>
           </div>
-
           <div className="flex flex-col">
-            <span className="text-sm font-medium text-gray-500">Case Number</span>
-            <span className="text-lg font-semibold">{caseData.caseNumber}</span>
-          </div>
-
-          <div className="flex flex-col">
-            <span className="text-sm font-medium text-gray-500">CNR Number</span>
-            <span className="text-lg font-semibold">{caseData.cnrNumber}</span>
+            <span className="text-sm font-medium text-gray-500">
+              CNR Number
+            </span>
+            <span className="text-lg font-semibold">
+              {caseData.cnrNumber || "Not Available"}
+            </span>
           </div>
 
           <div className="flex flex-col">
@@ -48,10 +55,78 @@ const CaseDetails = ({ caseData }) => {
             </span>
           </div>
 
+          {/* Petitioner Details */}
           <div className="flex flex-col">
-            <span className="text-sm font-medium text-gray-500">Next Hearing</span>
+            <span className="text-sm font-medium text-gray-500">
+              Petitioner Name
+            </span>
             <span className="text-lg font-semibold">
-              {new Date(caseData.nextHearingDate).toLocaleDateString()}
+              {caseData.petitionerName || "Not Available"}
+            </span>
+          </div>
+
+          <div className="flex flex-col">
+            <span className="text-sm font-medium text-gray-500">
+              Petitioner Address
+            </span>
+            <span className="text-lg font-semibold">
+              {caseData.petitionerAddress || "Not Available"}
+            </span>
+          </div>
+
+          <div className="flex flex-col">
+            <span className="text-sm font-medium text-gray-500">
+              Petitioner Contact
+            </span>
+            <span className="text-lg font-semibold">
+              {caseData.petitionerContact || "Not Available"}
+            </span>
+          </div>
+
+          {/* Advocate Details */}
+          <div className="flex flex-col">
+            <span className="text-sm font-medium text-gray-500">
+              Advocate Name
+            </span>
+            <span className="text-lg font-semibold">
+              {caseData.advocateName || "Not Available"}
+            </span>
+          </div>
+
+          <div className="flex flex-col">
+            <span className="text-sm font-medium text-gray-500">
+              Bar Council Reg. No.
+            </span>
+            <span className="text-lg font-semibold">
+              {caseData.advocateBarRegNo || "Not Available"}
+            </span>
+          </div>
+
+          <div className="flex flex-col">
+            <span className="text-sm font-medium text-gray-500">
+              Advocate Contact
+            </span>
+            <span className="text-lg font-semibold">
+              {caseData.advocateContact || "Not Available"}
+            </span>
+          </div>
+
+          {/* Dates and Status */}
+          <div className="flex flex-col">
+            <span className="text-sm font-medium text-gray-500">
+              Filing Date
+            </span>
+            <span className="text-lg font-semibold">
+              {formatDate(caseData.filingDate)}
+            </span>
+          </div>
+
+          <div className="flex flex-col">
+            <span className="text-sm font-medium text-gray-500">
+              Created At
+            </span>
+            <span className="text-lg font-semibold">
+              {formatDate(caseData.createdAt)}
             </span>
           </div>
 

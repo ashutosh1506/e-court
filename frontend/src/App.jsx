@@ -14,6 +14,7 @@ import Footer from "./components/Footer";
 import { setLogin, setRoleAsClient, setRoleAsLawyer } from "./utils/userSlice";
 import "react-toastify/dist/ReactToastify.css";
 import MeetingRoom from "./pages/MeetingRoom";
+import CaseDetails from "./components/CaseDetails";
 
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Profile = lazy(() => import("./components/Profile"));
@@ -58,6 +59,7 @@ const App = () => {
             <Route path="lawyer-stats" element={<LawyerStats />} />
             <Route path="find-lawyer" element={<FindLawyer />} />
             <Route path="meeting-room" element={<MeetingRoom />} />
+            <Route path="case-details" element={<CaseDetails />} />
           </Route>
 
           <Route path="*" element={<Navigate to="/" replace />} />

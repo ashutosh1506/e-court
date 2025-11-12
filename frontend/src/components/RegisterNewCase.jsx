@@ -15,7 +15,6 @@ const RegisterNewCase = () => {
     advocateContact: "",
   });
 
-  const [petitionerAadharFile, setPetitionerAadharFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [cnrNumber, setCnrNumber] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
@@ -27,11 +26,6 @@ const RegisterNewCase = () => {
     setForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  // File upload
-  const handleFileChange = (e) => {
-    setPetitionerAadharFile(e.target.files?.[0] ?? null);
-  };
-
   // Submit form
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -40,21 +34,13 @@ const RegisterNewCase = () => {
     setCnrNumber(null);
 
     try {
-      const payload = new FormData();
-      for (const key in form) {
-        payload.append(key, form[key]);
-      }
-      if (petitionerAadharFile) {
-        payload.append("petitionerAadharFile", petitionerAadharFile);
-      }
+      // Send JSON since no file upload is required
+      const payload = { ...form };
 
       // API call — adjust your endpoint
       const res = await axios.post(
         "http://localhost:5000/api/cases/register",
-        payload,
-        {
-          headers: { "Content-Type": "multipart/form-data" },
-        }
+        payload
       );
 
       if (res.data?.cnrNumber) {
@@ -77,7 +63,6 @@ const RegisterNewCase = () => {
         advocateBarRegNo: "",
         advocateContact: "",
       });
-      setPetitionerAadharFile(null);
     } catch (err) {
       console.error("Error:", err);
       setErrorMsg("❌ Failed to register case. Please try again.");
@@ -224,16 +209,6 @@ const RegisterNewCase = () => {
                     />
                   </div>
                 </div>
-
-                <div className="form-control mt-3">
-                  <label className="label">Aadhar Card (Upload)</label>
-                  <input
-                    type="file"
-                    accept="image/*,application/pdf"
-                    className="file-input file-input-bordered w-full"
-                    onChange={handleFileChange}
-                  />
-                </div>
               </div>
 
               {/* Advocate Details */}
@@ -299,7 +274,6 @@ const RegisterNewCase = () => {
                       advocateBarRegNo: "",
                       advocateContact: "",
                     });
-                    setPetitionerAadharFile(null);
                   }}
                 >
                   Reset

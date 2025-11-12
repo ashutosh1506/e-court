@@ -5,6 +5,7 @@ import {
   loginLawyer,
   registerLawyer,
   getLawyerDetails,
+  getAllLawyers,
 } from "../controllers/lawyerController.js";
 import { verifyJWT } from "../middlewares/authMiddleware.js";
 
@@ -19,7 +20,7 @@ router.get("/logout", verifyJWT, lawyerLogout);
 router.put("/editLawyerProfile", verifyJWT, editLawyerProfile);
 
 // Fetch lawyer details
-router.get("/details", verifyJWT, getLawyerDetails);
-router.get("/details/:id", verifyJWT, getLawyerDetails);
+router.get("/details", getAllLawyers);
+// router.get("/details/:id", verifyJWT, getLawyerDetails);
 
 export default router;
