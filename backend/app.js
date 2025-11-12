@@ -28,8 +28,7 @@ app.use(express.static("public"));
 app.use(cookieParser());
 
 app.use("/api/v1/clients", clientRoute);
-app.use("/api/v1/lawyers", lawyerRoute); 
-app.use("api/v1/cases", caseRoute);
-
+app.use("/api/v1/lawyers", lawyerRoute);
+app.use("/api/v1/cases", caseRoute);
 
 export { app };

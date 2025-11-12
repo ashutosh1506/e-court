@@ -1,4 +1,18 @@
+import { useNavigate } from "react-router-dom";
+
 const CaseStatus = () => {
+  const navigate = useNavigate();
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const handleSubmit = async () => {
+    // try {
+    //   const response = await fetch(backendURL + "/caseDetails");
+    //   const data = await response.json();
+    //   console.log(data);
+    //   navigate("/case-details", { state: { caseData: data } });
+    // } catch (error) {
+    //   console.error(error);
+    // }
+  };
   return (
     <section className="min-h-screen w-full flex flex-col items-center justify-start px-4 pt-16 pb-32">
       <div className="w-full max-w-5xl mx-auto flex flex-col items-center">
@@ -24,7 +38,9 @@ const CaseStatus = () => {
             </div>
 
             <div className="card-actions justify-center pt-2">
-              <button className="btn btn-primary w-32">Search</button>
+              <button className="btn btn-primary w-32" onClick={handleSubmit}>
+                Search
+              </button>
             </div>
           </div>
         </div>
