@@ -3,30 +3,6 @@ import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
 
-const searchByCaseType = asyncHandler(async (req, res) => {
-  const { caseType, caseNumber } = req.body;
-
-  if (!caseType?.trim()) {
-    throw new ApiError(400, "Case type is required");
-  }
-
-  if (!caseNumber?.trim()) {
-    throw new ApiError(400, "Case number is required");
-  }
-
-  const caseData = await Case.findOne({
-    caseType: caseType.trim(),
-    caseNumber: caseNumber.trim(),
-  });
-
-  if (!caseData) {
-    throw new ApiError(404, "Case not found with the provided details ");
-  }
-
-  return res
-    .status(200)
-    .json(new ApiResponse(200, caseData, "Case found successfully"));
-});
 
 const searchByCnrNumber = asyncHandler(async (req, res) => {
   const cnrNumber = req.body;
@@ -57,58 +33,81 @@ const searchByCnrNumber = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, caseData, "Case found successfully"));
 });
 
+import crypto from "crypto";
+
 const createCase = asyncHandler(async (req, res) => {
-  const { caseType, caseNumber, cnrNumber, nextHearingDate, status, court } = req.body;
+  const {
+    court,
+    caseType,
+    shortCaseTitle,
 
-  // Check Required Fields
-  if (!caseType?.trim()) {
-    throw new ApiError(400, "Case type is required");
-  }
+    petitionerName,
+    petitionerAddress,
+    petitionerContact,
+    petitionerAadhar,
 
-  if (!caseNumber) {
-    throw new ApiError(400, "Case number is required");
-  }
+    advocateName,
+    advocateBarReg,
+    advocateContact
+  } = req.body;
 
-  if (!cnrNumber?.trim()) {
-    throw new ApiError(400, "CNR number is required");
-  }
+  // VALIDATION
+  if (!court?.trim()) throw new ApiError(400, "Court name is required");
+  if (!caseType?.trim()) throw new ApiError(400, "Case type is required");
+  if (!shortCaseTitle?.trim()) throw new ApiError(400, "Short case title is required");
 
-  if (!nextHearingDate) {
-    throw new ApiError(400, "Next hearing date is required");
-  }
+  if (!petitionerName?.trim()) throw new ApiError(400, "Petitioner name is required");
+  if (!petitionerAddress?.trim()) throw new ApiError(400, "Petitioner address is required");
+  if (!petitionerContact?.trim()) throw new ApiError(400, "Petitioner contact is required");
+  if (!petitionerAadhar?.trim()) throw new ApiError(400, "Petitioner Aadhar is required");
 
-  // CNR Format Validation (16 Alphanumeric)
-  const cnrPattern = /^[A-Za-z0-9]{16}$/;
-  if (!cnrPattern.test(cnrNumber)) {
-    throw new ApiError(400, "Invalid CNR format — must be a 16-character alphanumeric value");
-  }
+  if (!advocateName?.trim()) throw new ApiError(400, "Advocate name is required");
+  if (!advocateBarReg?.trim()) throw new ApiError(400, "Advocate Bar Council Reg. No is required");
+  if (!advocateContact?.trim()) throw new ApiError(400, "Advocate contact is required");
 
-  // Check if Case Already Exists (caseNumber or cnrNumber duplicate)
-  const existingCase = await Case.findOne({
-    $or: [{ caseNumber }, { cnrNumber: cnrNumber.toUpperCase() }]
-  });
+  // AUTO-GENERATE CASE NUMBER
+  const lastCase = await Case.findOne().sort({ caseNumber: -1 });
+  const caseNumber = lastCase ? lastCase.caseNumber + 1 : 1;
 
-  if (existingCase) {
-    throw new ApiError(400, "Case already exists with this Case Number or CNR Number");
-  }
+  // AUTO-GENERATE CNR NUMBER (16 char alphanumeric)
+  const cnrNumber = crypto.randomBytes(8).toString("hex").toUpperCase();
 
-  // Create Case
+  // DEFAULT NEXT HEARING DATE = 30 DAYS FROM NOW
+  const nextHearingDate = new Date();
+  nextHearingDate.setDate(nextHearingDate.getDate() + 30);
+
+  // CREATE CASE
   const newCase = await Case.create({
-    caseType: caseType.trim(),
+    court,
+    caseType,
+    shortCaseTitle,
+
+    petitioner: {
+      name: petitionerName.trim(),
+      address: petitionerAddress.trim(),
+      contact: petitionerContact.trim(),
+      aadhar: petitionerAadhar.trim()
+    },
+
+    advocate: {
+      name: advocateName.trim(),
+      barRegNo: advocateBarReg.trim(),
+      contact: advocateContact.trim()
+    },
+
     caseNumber,
-    cnrNumber: cnrNumber.toUpperCase(),
-    nextHearingDate,
-    status: status?.trim() || "Pending",
-    court: court?.trim() || "Not Assigned"
+    cnrNumber,
+    nextHearingDate
   });
 
   return res
     .status(201)
-    .json(new ApiResponse(201, newCase, "New case registered successfully"));
+    .json(
+      new ApiResponse(201, newCase, "New case registered successfully — CNR generated")
+    );
 });
 
 
-export { searchByCaseType, searchByCnrNumber, createCase };
 
 
-
+export { searchByCnrNumber, createCase };

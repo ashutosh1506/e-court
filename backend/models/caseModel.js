@@ -1,43 +1,60 @@
 import mongoose, { Schema } from "mongoose";
- 
 
-const caseSchema = new Schema({
-
-    caseType :{
-        type: String,
-        required: true,
-
+const caseSchema = new Schema(
+  {
+    court: {
+      type: String,
+      required: true,
+      enum: ["District Court", "High Court", "Supreme Court"]
     },
 
-    caseNumber :{
-        type: Number,
-        required: true,
-        unique: true,
+    caseType: {
+      type: String,
+      required: true,
+      enum: ["Civil", "Criminal", "Family", "Writ", "Other"]
     },
 
-    cnrNumber :{
-        type: String,
-        required: true,
-        unique: true,
+    shortCaseTitle: {
+      type: String,
+      required: true,
     },
 
-    nextHearingDate :{
-        type: Date,
-        required: true,
-    },
-    
-    status :{
-        type: String,
+    petitioner: {
+      name: { type: String, required: true },
+      address: { type: String, required: true },
+      contact: { type: String, required: true },
+      aadhar: { type: String, required: true }
     },
 
-    court :{
-        type: String
+    advocate: {
+      name: { type: String, required: true },
+      barRegNo: { type: String, required: true },
+      contact: { type: String, required: true }
+    },
+
+    caseNumber: { 
+      type: Number, 
+      required: true, 
+      unique: true 
+    },
+
+    cnrNumber: { 
+      type: String, 
+      required: true, 
+      unique: true 
+    },
+
+    nextHearingDate: { 
+      type: Date, 
+      required: true 
+    },
+
+    status: { 
+      type: String, 
+      default: "Pending" 
     }
-
-},
-{
-    timestamps: true
-})
-
+  },
+  { timestamps: true }
+);
 
 export const Case = mongoose.model("Case", caseSchema);
