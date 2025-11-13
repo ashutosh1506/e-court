@@ -1,5 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const formatDate = (dateStr) => {
   if (!dateStr) return "Not Available";
@@ -7,7 +9,10 @@ const formatDate = (dateStr) => {
   return isNaN(date) ? "Invalid Date" : date.toLocaleDateString();
 };
 
-const CaseDetails = ({ caseData }) => {
+const CaseDetails = () => {
+  const caseData = useSelector((state) => state.case.caseData);
+  // console.log("CaseData : " + caseData.caseType);
+  const navigate = useNavigate();
   if (!caseData) {
     return (
       <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-br from-blue-100 to-indigo-200 text-gray-700">
@@ -61,7 +66,7 @@ const CaseDetails = ({ caseData }) => {
               Petitioner Name
             </span>
             <span className="text-lg font-semibold">
-              {caseData.petitionerName || "Not Available"}
+              {caseData.petitioner.name || "Not Available"}
             </span>
           </div>
 
@@ -70,7 +75,7 @@ const CaseDetails = ({ caseData }) => {
               Petitioner Address
             </span>
             <span className="text-lg font-semibold">
-              {caseData.petitionerAddress || "Not Available"}
+              {caseData.petitioner.address || "Not Available"}
             </span>
           </div>
 
@@ -79,7 +84,7 @@ const CaseDetails = ({ caseData }) => {
               Petitioner Contact
             </span>
             <span className="text-lg font-semibold">
-              {caseData.petitionerContact || "Not Available"}
+              {caseData.petitioner.contact || "Not Available"}
             </span>
           </div>
 
@@ -89,7 +94,7 @@ const CaseDetails = ({ caseData }) => {
               Advocate Name
             </span>
             <span className="text-lg font-semibold">
-              {caseData.advocateName || "Not Available"}
+              {caseData.advocate.name || "Not Available"}
             </span>
           </div>
 
@@ -98,7 +103,7 @@ const CaseDetails = ({ caseData }) => {
               Bar Council Reg. No.
             </span>
             <span className="text-lg font-semibold">
-              {caseData.advocateBarRegNo || "Not Available"}
+              {caseData.advocate.barRegNo || "Not Available"}
             </span>
           </div>
 
@@ -107,7 +112,7 @@ const CaseDetails = ({ caseData }) => {
               Advocate Contact
             </span>
             <span className="text-lg font-semibold">
-              {caseData.advocateContact || "Not Available"}
+              {caseData.advocate.contact || "Not Available"}
             </span>
           </div>
 
@@ -117,16 +122,14 @@ const CaseDetails = ({ caseData }) => {
               Filing Date
             </span>
             <span className="text-lg font-semibold">
-              {formatDate(caseData.filingDate)}
+              {formatDate(caseData.createdAt)}
             </span>
           </div>
 
           <div className="flex flex-col">
-            <span className="text-sm font-medium text-gray-500">
-              Created At
-            </span>
-            <span className="text-lg font-semibold">
-              {formatDate(caseData.createdAt)}
+            <span className="text-sm font-medium text-gray-500">Title</span>
+            <span className="text-lg font-semibold max-w-80">
+              {caseData.shortCaseTitle}
             </span>
           </div>
 
@@ -148,7 +151,10 @@ const CaseDetails = ({ caseData }) => {
 
         <div className="flex justify-center mt-10">
           <button
-            onClick={() => window.location.reload()}
+            onClick={() => {
+              window.scrollTo(0, 0);
+              navigate("/dashboard/case-status");
+            }}
             className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white text-lg font-semibold rounded-xl shadow-md transition-all transform hover:scale-105"
           >
             🔄 Search Another Case

@@ -31,6 +31,8 @@
 - Fetch User Details API Intergrated
 - Update User Details API Intergrated
 - Integrated video meeting room feature with ZegoCloud
+- Integrated Register case API
+- Integrated check case status API
 
 # Aanya
 

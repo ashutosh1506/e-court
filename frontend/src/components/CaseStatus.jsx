@@ -1,18 +1,35 @@
+import axios from "axios";
+import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { setCaseData } from "../utils/caseSlice";
+
+// CNR : 2D937FBD560BB266
 
 const CaseStatus = () => {
+  const [cnrNumber, setCnrNumber] = useState("");
   const navigate = useNavigate();
   const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const dispatch = useDispatch();
   const handleSubmit = async () => {
-    // try {
-    //   const response = await fetch(backendURL + "/caseDetails");
-    //   const data = await response.json();
-    //   console.log(data);
-    //   navigate("/case-details", { state: { caseData: data } });
-    // } catch (error) {
-    //   console.error(error);
-    // }
+    try {
+      const token = localStorage.getItem("token");
+
+      const response = await axios.post(
+        backendURL + "/cases/searchByCnrNumber",
+        { cnrNumber },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      const caseData = response?.data?.data;
+      dispatch(setCaseData(caseData));
+      navigate("/dashboard/case-details");
+    } catch (error) {
+      console.error(error);
+    }
   };
+
   return (
     <section className="min-h-screen w-full flex flex-col items-center justify-start px-4 pt-16 pb-32">
       <div className="w-full max-w-5xl mx-auto flex flex-col items-center">
@@ -32,6 +49,8 @@ const CaseStatus = () => {
                     type="text"
                     placeholder="XXXX XXXX XXXX XXXX"
                     className="input input-bordered w-full text-center"
+                    value={cnrNumber}
+                    onChange={(e) => setCnrNumber(e.target.value)}
                   />
                 </label>
               </div>

@@ -35,8 +35,6 @@ const searchByCnrNumber = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, caseData, "Case found successfully"));
 });
 
-
-
 // CREATE CASE — CNR + CASE NUMBER AUTO GENERATE
 
 const createCase = asyncHandler(async (req, res) => {
@@ -52,22 +50,30 @@ const createCase = asyncHandler(async (req, res) => {
 
     advocateName,
     advocateBarReg,
-    advocateContact
+    advocateContact,
   } = req.body;
 
   // VALIDATION
   if (!court?.trim()) throw new ApiError(400, "Court name is required");
   if (!caseType?.trim()) throw new ApiError(400, "Case type is required");
-  if (!shortCaseTitle?.trim()) throw new ApiError(400, "Short case title is required");
+  if (!shortCaseTitle?.trim())
+    throw new ApiError(400, "Short case title is required");
 
-  if (!petitionerName?.trim()) throw new ApiError(400, "Petitioner name is required");
-  if (!petitionerAddress?.trim()) throw new ApiError(400, "Petitioner address is required");
-  if (!petitionerContact?.trim()) throw new ApiError(400, "Petitioner contact is required");
-  if (!petitionerAadhar?.trim()) throw new ApiError(400, "Petitioner Aadhar is required");
+  if (!petitionerName?.trim())
+    throw new ApiError(400, "Petitioner name is required");
+  if (!petitionerAddress?.trim())
+    throw new ApiError(400, "Petitioner address is required");
+  if (!petitionerContact?.trim())
+    throw new ApiError(400, "Petitioner contact is required");
+  if (!petitionerAadhar?.trim())
+    throw new ApiError(400, "Petitioner Aadhar is required");
 
-  if (!advocateName?.trim()) throw new ApiError(400, "Advocate name is required");
-  if (!advocateBarReg?.trim()) throw new ApiError(400, "Advocate Bar Council Reg. No is required");
-  if (!advocateContact?.trim()) throw new ApiError(400, "Advocate contact is required");
+  if (!advocateName?.trim())
+    throw new ApiError(400, "Advocate name is required");
+  if (!advocateBarReg?.trim())
+    throw new ApiError(400, "Advocate Bar Council Reg. No is required");
+  if (!advocateContact?.trim())
+    throw new ApiError(400, "Advocate contact is required");
 
   // AUTO-GENERATE CASE NUMBER
   const lastCase = await Case.findOne().sort({ caseNumber: -1 });
@@ -90,31 +96,33 @@ const createCase = asyncHandler(async (req, res) => {
       name: petitionerName.trim(),
       address: petitionerAddress.trim(),
       contact: petitionerContact.trim(),
-      aadhar: petitionerAadhar.trim()
+      aadhar: petitionerAadhar.trim(),
     },
 
     advocate: {
       name: advocateName.trim(),
       barRegNo: advocateBarReg.trim(),
-      contact: advocateContact.trim()
+      contact: advocateContact.trim(),
     },
 
     caseNumber,
     cnrNumber,
     nextHearingDate,
-    status: "Pending"
+    status: "Pending",
   });
 
   return res
     .status(201)
     .json(
-      new ApiResponse(201, newCase, "New case registered successfully — CNR generated")
+      new ApiResponse(
+        201,
+        newCase,
+        "New case registered successfully — CNR generated"
+      )
     );
 });
 
-
-
-// FETCH CASE DETAILS USING CNR 
+// FETCH CASE DETAILS USING CNR
 
 const fetchCaseDetails = asyncHandler(async (req, res) => {
   const { cnrNumber } = req.body;
@@ -126,7 +134,7 @@ const fetchCaseDetails = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Invalid CNR format");
 
   const caseData = await Case.findOne({
-    cnrNumber: cnrNumber.toUpperCase()
+    cnrNumber: cnrNumber.toUpperCase(),
   }).lean();
 
   if (!caseData)
@@ -143,13 +151,14 @@ const fetchCaseDetails = asyncHandler(async (req, res) => {
     advocateBarRegNo: caseData.advocate?.barRegNo,
     advocateContact: caseData.advocate?.contact,
     filingDate: caseData.createdAt,
-    status: caseData.status
+    status: caseData.status,
   };
 
   return res
     .status(200)
-    .json(new ApiResponse(200, caseDetails, "Case details fetched successfully"));
+    .json(
+      new ApiResponse(200, caseDetails, "Case details fetched successfully")
+    );
 });
-
 
 export { searchByCnrNumber, createCase, fetchCaseDetails };

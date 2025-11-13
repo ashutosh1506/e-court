@@ -3,15 +3,15 @@ import axios from "axios";
 
 const RegisterNewCase = () => {
   const [form, setForm] = useState({
-    courtName: "",
+    court: "",
     caseType: "",
-    caseTitle: "",
+    shortCaseTitle: "",
     petitionerName: "",
     petitionerAddress: "",
     petitionerContact: "",
-    petitionerAadharNumber: "",
+    petitionerAadhar: "",
     advocateName: "",
-    advocateBarRegNo: "",
+    advocateBarReg: "",
     advocateContact: "",
   });
 
@@ -19,6 +19,7 @@ const RegisterNewCase = () => {
   const [cnrNumber, setCnrNumber] = useState(null);
   const [showPopup, setShowPopup] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+  const backendURL = import.meta.env.VITE_BACKEND_URL;
 
   // Handle input
   const handleChange = (e) => {
@@ -38,13 +39,19 @@ const RegisterNewCase = () => {
       const payload = { ...form };
 
       // API call — adjust your endpoint
+      const token = localStorage.getItem("token");
       const res = await axios.post(
-        "http://localhost:5000/api/cases/register",
-        payload
+        backendURL + "/cases/registerCase",
+        payload,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
       );
-
-      if (res.data?.cnrNumber) {
-        setCnrNumber(res.data.cnrNumber);
+      const cnrNumber = res?.data?.data.cnrNumber;
+      if (cnrNumber) {
+        setCnrNumber(cnrNumber);
         setShowPopup(true);
       } else {
         throw new Error("CNR number not received from backend");
@@ -52,15 +59,15 @@ const RegisterNewCase = () => {
 
       // Reset form fields
       setForm({
-        courtName: "",
+        court: "",
         caseType: "",
-        caseTitle: "",
+        shortCaseTitle: "",
         petitionerName: "",
         petitionerAddress: "",
         petitionerContact: "",
-        petitionerAadharNumber: "",
+        petitionerAadhar: "",
         advocateName: "",
-        advocateBarRegNo: "",
+        advocateBarReg: "",
         advocateContact: "",
       });
     } catch (err) {
@@ -96,18 +103,18 @@ const RegisterNewCase = () => {
                   </span>
                 </label>
                 <select
-                  name="courtName"
+                  name="court"
                   className="select select-bordered w-full"
-                  value={form.courtName}
+                  value={form.court}
                   onChange={handleChange}
                   required
                 >
                   <option value="" disabled>
                     Select Court
                   </option>
-                  <option value="district">District Court</option>
-                  <option value="high">High Court</option>
-                  <option value="supreme">Supreme Court</option>
+                  <option value="District">District Court</option>
+                  <option value="High">High Court</option>
+                  <option value="Supreme">Supreme Court</option>
                 </select>
               </div>
 
@@ -126,9 +133,9 @@ const RegisterNewCase = () => {
                   <option value="" disabled>
                     Choose a type
                   </option>
-                  <option value="civil">Civil</option>
-                  <option value="criminal">Criminal</option>
-                  <option value="constitutional">Constitutional</option>
+                  <option value="Civil">Civil</option>
+                  <option value="Criminal">Criminal</option>
+                  <option value="Constitutional">Constitutional</option>
                 </select>
               </div>
 
@@ -141,10 +148,10 @@ const RegisterNewCase = () => {
                 </label>
                 <input
                   type="text"
-                  name="caseTitle"
+                  name="shortCaseTitle"
                   placeholder="e.g. Ram v. State — Land Dispute"
                   className="input input-bordered w-full"
-                  value={form.caseTitle}
+                  value={form.shortCaseTitle}
                   onChange={handleChange}
                   required
                 />
@@ -200,10 +207,10 @@ const RegisterNewCase = () => {
                     <label className="label">Aadhar Number</label>
                     <input
                       type="text"
-                      name="petitionerAadharNumber"
+                      name="petitionerAadhar"
                       placeholder="XXXX-XXXX-XXXX"
                       className="input input-bordered w-full"
-                      value={form.petitionerAadharNumber}
+                      value={form.petitionerAadhar}
                       onChange={handleChange}
                       required
                     />
@@ -232,10 +239,10 @@ const RegisterNewCase = () => {
                     <label className="label">Bar Council Reg. No.</label>
                     <input
                       type="text"
-                      name="advocateBarRegNo"
+                      name="advocateBarReg"
                       placeholder="Registration Number"
                       className="input input-bordered w-full"
-                      value={form.advocateBarRegNo}
+                      value={form.advocateBarReg}
                       onChange={handleChange}
                       required
                     />
@@ -263,15 +270,15 @@ const RegisterNewCase = () => {
                   className="btn btn-secondary"
                   onClick={() => {
                     setForm({
-                      courtName: "",
+                      court: "",
                       caseType: "",
-                      caseTitle: "",
+                      shortCaseTitle: "",
                       petitionerName: "",
                       petitionerAddress: "",
                       petitionerContact: "",
-                      petitionerAadharNumber: "",
+                      petitionerAadhar: "",
                       advocateName: "",
-                      advocateBarRegNo: "",
+                      advocateBarReg: "",
                       advocateContact: "",
                     });
                   }}

@@ -5,14 +5,13 @@ const caseSchema = new Schema(
     court: {
       type: String,
       required: true,
-      enum: ["District Court", "High Court", "Supreme Court"],
-      
+      enum: ["District", "High", "Supreme"],
     },
 
     caseType: {
       type: String,
       required: true,
-      enum: ["Civil", "Criminal", "Family", "Writ", "Other"],
+      enum: ["Civil", "Criminal", "Constitutional"],
     },
 
     shortCaseTitle: {
