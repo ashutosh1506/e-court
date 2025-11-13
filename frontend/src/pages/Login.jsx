@@ -26,7 +26,6 @@ const Login = () => {
         });
 
         if (response.data.success) {
-          // console.log(response.data.data);
           const { Accesstoken, lawyer } = response.data.data;
           localStorage.setItem("token", Accesstoken);
           localStorage.setItem("lawyerId", response.data.data.lawyer._id);
