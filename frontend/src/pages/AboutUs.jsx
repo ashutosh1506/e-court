@@ -1,9 +1,4 @@
-import React from "react";
 import { motion } from "framer-motion";
-import supremeCourt from "../assets/supremeCourt.jpg";
-import depart from "../assets/depart.jpg";
-import digitalindia from "../assets/digitalindia.jpg";
-import nic from "../assets/nic.jpg";
 const AboutUs = () => {
   return (
     <div className="min-h-screen bg-base-100 text-base-content px-4 sm:px-6 md:px-12 lg:px-20 py-12">
