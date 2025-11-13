@@ -21,6 +21,6 @@ router.put("/editLawyerProfile", verifyJWT, editLawyerProfile);
 
 // Fetch lawyer details
 router.get("/details", getAllLawyers);
-// router.get("/details/:id", verifyJWT, getLawyerDetails);
+router.get("/details/:id", verifyJWT, getLawyerDetails);
 
 export default router;
