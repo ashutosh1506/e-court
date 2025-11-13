@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 const Register = () => {
   const { user } = useSelector((state) => state.user);
   const backendURL = import.meta.env.VITE_BACKEND_URL;
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -17,7 +18,8 @@ const Register = () => {
     gender: "",
     state: "",
     password: "",
-    confirm_password: "",
+    image: "", // image URL (optional)
+    lawyerType: "", // required for lawyers
   });
 
   const navigate = useNavigate();
@@ -55,22 +57,47 @@ const Register = () => {
     "West Bengal",
   ];
 
+  const lawyerTypes = [
+    "Criminal",
+    "Civil",
+    "Family",
+    "Corporate",
+    "Property",
+    "Tax",
+    "Others",
+  ];
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
+
+  const isValidUrl = (u) => !u || /^https?:\/\/[^\s$.?#].[^\s]*$/i.test(u); // allow empty, or valid http/https
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formData.password !== formData.confirm_password) {
+
+    if (formData.password !== confirmPassword) {
       toast.error("Passwords do not match!");
       return;
     }
+
+    if (user === "lawyer" && !formData.lawyerType) {
+      toast.error("Please select lawyer type");
+      return;
+    }
+
+    if (!isValidUrl(formData.image)) {
+      toast.error("Invalid image URL");
+      return;
+    }
+
     try {
       let response;
       if (user === "lawyer") {
         response = await axios.post(backendURL + "/lawyers/register", formData);
       } else {
+        // for clients we don't send lawyer-specific fields usually, but backend should ignore extras
         response = await axios.post(backendURL + "/clients/register", formData);
       }
 
@@ -78,18 +105,18 @@ const Register = () => {
         toast.success("Registration Successful!");
         navigate("/login");
       } else {
-        toast.error(response.data.message);
+        toast.error(response.data.message || "Registration failed");
       }
     } catch (err) {
       console.error(err);
-      toast.error("Something went wrong!");
+      toast.error(err?.response?.data?.message || "Something went wrong!");
     }
   };
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-base-100 mt-10">
       <div className="card w-full max-w-4xl shadow-2xl bg-base-100 m-4 lg:-mt-10">
-        <form className="card-body">
+        <form className="card-body" onSubmit={handleSubmit}>
           <h2 className="text-2xl font-bold text-center mb-6">
             Registration Form
           </h2>
@@ -238,6 +265,50 @@ const Register = () => {
             </div>
           </div>
 
+          {/* Lawyer-only fields */}
+          {user === "lawyer" && (
+            <>
+              <h3 className="divider">Lawyer Details</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Lawyer Type</span>
+                  </label>
+                  <select
+                    name="lawyerType"
+                    value={formData.lawyerType}
+                    onChange={handleChange}
+                    className="select select-bordered w-full"
+                    required
+                  >
+                    <option value="">Select Type</option>
+                    {lawyerTypes.map((t, i) => (
+                      <option key={i} value={t}>
+                        {t}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">
+                      Profile Image URL (optional)
+                    </span>
+                  </label>
+                  <input
+                    type="url"
+                    name="image"
+                    value={formData.image}
+                    onChange={handleChange}
+                    placeholder="https://example.com/your-photo.jpg"
+                    className="input input-bordered"
+                  />
+                </div>
+              </div>
+            </>
+          )}
+
           {/* Password Section */}
           <h3 className="divider">Choose Password</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -263,9 +334,9 @@ const Register = () => {
               </label>
               <input
                 type="password"
-                name="confirm_password"
-                value={formData.confirm_password}
-                onChange={handleChange}
+                name="confirmPassword"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 placeholder="Confirm password"
                 className="input input-bordered w-full"
                 required
@@ -275,11 +346,7 @@ const Register = () => {
 
           {/* Submit Button */}
           <div className="form-control mt-6">
-            <button
-              type="submit"
-              className="btn btn-primary w-full"
-              onClick={handleSubmit}
-            >
+            <button type="submit" className="btn btn-primary w-full">
               Submit
             </button>
           </div>

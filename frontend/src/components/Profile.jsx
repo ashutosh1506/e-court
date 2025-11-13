@@ -44,6 +44,15 @@ const Profile = () => {
     "Uttarakhand",
     "West Bengal",
   ];
+  const lawyerTypes = [
+    "Criminal",
+    "Civil",
+    "Family",
+    "Corporate",
+    "Property",
+    "Tax",
+    "Others",
+  ];
   const [formData, setFormData] = useState({
     fullName: "",
     dob: "",
@@ -51,6 +60,7 @@ const Profile = () => {
     barAssociationNo: "",
     gender: "",
     state: "",
+    lawyerType: "",
   });
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -86,6 +96,7 @@ const Profile = () => {
         barAssociationNo: profile.barAssociationNo || "",
         gender: profile.gender || "",
         state: profile.state || "",
+        lawyerType: profile.lawyerType || "",
       });
     } catch (err) {
       console.error(err.response?.data || err.message);
@@ -164,20 +175,23 @@ const Profile = () => {
   }
   return (
     <div className="w-full min-h-screen flex items-center justify-center bg-base-100/90 lg:-mt-10">
-      <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-x-20 lg:h-160">
+      <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-x-20 gap-y-10 self-stretch pb-20 mt-10">
         {/* Left: Profile Card */}
         <div className="flex flex-col bg-base-100 shadow-xl rounded-xl w-full lg:w-2/3 max-w-md h-full hover:shadow-2xl transition duration-200 mb-10 lg:mb-0">
           <div className="mx-auto w-40 p-6">
             <img
-              src="https://img.daisyui.com/images/profile/demo/batperson@192.webp"
+              src={
+                client.image ||
+                "https://img.daisyui.com/images/profile/demo/batperson@192.webp"
+              }
               className="rounded-full shadow-lg border-4 border-primary"
             />
           </div>
-          <div className="p-6">
+          <div className="p-6 ">
             <h2 className="text-center text-2xl font-bold text-primary -mt-2">
               Details
             </h2>
-            <div className="mt-6 bg-base-200/50 rounded-lg p-6 shadow-md">
+            <div className="mt-6 bg-base-200/50 rounded-lg p-6 shadow-md pb-10">
               <h3 className="text-lg font-bold text-primary mb-4 border-b pb-2">
                 Profile Details
               </h3>
@@ -200,6 +214,12 @@ const Profile = () => {
                 {user === "lawyer" && (
                   <p className="text-right">{client.barAssociationNo}</p>
                 )}
+                {user === "lawyer" && (
+                  <p className="font-semibold">Lawyer Type</p>
+                )}
+                {user === "lawyer" && (
+                  <p className="text-right">{client.lawyerType}</p>
+                )}
                 <p className="font-semibold">State:</p>
                 <p className="text-right">{client.state}</p>
               </div>
@@ -211,7 +231,7 @@ const Profile = () => {
         <div className="hidden lg:flex opacity-70 divider divider-horizontal self-stretch"></div>
 
         {/* Right: Edit Profile Form */}
-        <div className="flex items-stretch justify-center w-full lg:w-1/2 max-w-lg hover:shadow-2xl transition duration-200">
+        <div className="flex items-center justify-center w-full lg:w-1/2 max-w-lg hover:shadow-2xl transition duration-200 self-stretch">
           <div className="card w-full h-full bg-base-100 shadow-xl p-8 rounded-xl">
             <h2 className="text-2xl font-bold text-center text-secondary mb-6">
               Edit Your Profile
@@ -295,8 +315,27 @@ const Profile = () => {
                   ))}
                 </select>
               </div>
+              {user === "lawyer" && (
+                <div className="form-control">
+                  <label className="label font-semibold">Lawyer Type</label>
+                  <select
+                    name="lawyerType"
+                    value={formData.lawyerType}
+                    onChange={handleChange}
+                    className="select select-bordered w-full"
+                    required
+                  >
+                    <option value="">Select Lawyer Type</option>
+                    {lawyerTypes.map((type, index) => (
+                      <option key={index} value={type}>
+                        {type}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
 
-              <div className="form-control mt-6">
+              <div className="form-control mt-8">
                 <button
                   className="btn btn-primary w-full"
                   onClick={handleProfileUpdate}

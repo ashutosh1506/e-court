@@ -43,7 +43,10 @@ const LawyerModal = ({ lawyerId, onClose }) => {
 
         <div className="flex flex-col items-center p-6">
           <img
-            src="https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png"
+            src={
+              lawyer.image ||
+              "https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png"
+            }
             alt="Lawyer"
             className="w-32 h-32 rounded-full border-4 border-primary shadow-lg mb-4"
           />
@@ -51,7 +54,7 @@ const LawyerModal = ({ lawyerId, onClose }) => {
             {lawyer.fullName}
           </h3>
           <p className="text-gray-500 text-sm mb-4">
-            Civil Lawyer - {lawyer.state}
+            {lawyer.lawyerType} Lawyer - {lawyer.state}
           </p>
 
           <div className="w-full space-y-6">

@@ -17,7 +17,7 @@ const LawyerCard = ({ lawyer }) => {
               "https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png"
             }
             alt={lawyer.fullName}
-            className="object-cover h-48 w-full"
+            className=" h-60 w-full"
           />
         </figure>
         <div className="card-body">

@@ -28,9 +28,11 @@ const registerLawyer = asyncHandler(async (req, res) => {
     state,
     gender,
     password,
-    confirm_password,
+    image,
+    lawyerType,
   } = req.body;
 
+  // Required fields validation
   if (
     !fullName ||
     !dob ||
@@ -40,23 +42,24 @@ const registerLawyer = asyncHandler(async (req, res) => {
     !state ||
     !gender ||
     !password ||
-    !confirm_password
+    !lawyerType
   ) {
     throw new ApiError(400, "All fields are required");
   }
 
-  if (password !== confirm_password) {
-    throw new ApiError(400, "Passwords do not match");
+  // Image Validation (optional but if provided, must be valid URL)
+  if (image && !/^https?:\/\/.+/i.test(image)) {
+    throw new ApiError(400, "Invalid image URL");
   }
+  // Password match validation handled on frontend; backend doesn't require confirm password
 
+  // Check for existing lawyer
   const existingLawyer = await Lawyer.findOne({ email });
   if (existingLawyer) {
     throw new ApiError(400, "Lawyer already exists with this email");
   }
 
-  const salt = await bcrypt.genSalt(10);
-  const hashedPassword = await bcrypt.hash(password, salt);
-
+  // Create lawyer
   const lawyer = await Lawyer.create({
     fullName,
     dob,
@@ -65,10 +68,12 @@ const registerLawyer = asyncHandler(async (req, res) => {
     barAssociationNo,
     state,
     gender,
-    password : hashedPassword,
-    confirm_password: hashedPassword,
+    image,
+    lawyerType,
+    password,
   });
 
+  // Remove sensitive fields before sending response
   const createdLawyer = await Lawyer.findById(lawyer._id).select(
     "-password -confirm_password -refreshToken"
   );
@@ -149,20 +154,89 @@ const editLawyerProfile = asyncHandler(async (req, res) => {
     throw new ApiError(401, "You must be logged in to edit profile");
   }
 
-  const { fullName, dob, gender, phone, state, barAssociationNo } = req.body;
+  const {
+    fullName,
+    dob,
+    gender,
+    phone,
+    state,
+    barAssociationNo,
+    image,
+    lawyerType,
+  } = req.body;
+
+  // Validation helpers
+  const isValidDate = (d) => {
+    const date = new Date(d);
+    return !Number.isNaN(date.getTime());
+  };
+  const isFutureDate = (d) => new Date(d) > new Date();
+  const isValidURL = (u) =>
+    typeof u === "string" && /^https?:\/\/[^\s$.?#].[^\s]*$/i.test(u);
+  const isValidPhone = (p) => typeof p === "string" && /^[0-9]{10,15}$/.test(p); // 10-15 digits
+
+  // Allowed enums
+  const allowedGenders = ["Male", "Female", "Other"];
+  const allowedTypes = [
+    "Criminal",
+    "Civil",
+    "Family",
+    "Corporate",
+    "Property",
+    "Tax",
+    "Others",
+  ];
+
+  // Collect validation errors
+  const errors = [];
+
+  if (dob) {
+    if (!isValidDate(dob)) errors.push("Invalid dob format");
+    else if (isFutureDate(dob)) errors.push("dob cannot be in the future");
+  }
+
+  if (gender && !allowedGenders.includes(gender)) {
+    errors.push("Invalid gender value");
+  }
+
+  if (phone && !isValidPhone(phone)) {
+    errors.push("Invalid phone number (expect 10-15 digits)");
+  }
+
+  if (image && !isValidURL(image)) {
+    errors.push("Invalid image URL");
+  }
+
+  if (lawyerType && !allowedTypes.includes(lawyerType)) {
+    errors.push(`Invalid lawyerType. Allowed: ${allowedTypes.join(", ")}`);
+  }
+
+  if (barAssociationNo) {
+    const conflict = await Lawyer.findOne({
+      barAssociationNo,
+      _id: { $ne: loggedInLawyer },
+    });
+    if (conflict) errors.push("barAssociationNo already in use");
+  }
+
+  if (errors.length) {
+    throw new ApiError(400, errors.join("; "));
+  }
 
   const updateFields = {};
   if (fullName) updateFields.fullName = fullName;
-  if (dob) updateFields.dob = dob;
+  if (dob) updateFields.dob = new Date(dob);
   if (gender) updateFields.gender = gender;
   if (phone) updateFields.phone = phone;
   if (state) updateFields.state = state;
   if (barAssociationNo) updateFields.barAssociationNo = barAssociationNo;
+  if (image) updateFields.image = image;
+  if (lawyerType) updateFields.lawyerType = lawyerType;
 
   const updatedProfileOfLawyer = await Lawyer.findByIdAndUpdate(
     loggedInLawyer,
-    updateFields,
-    { new: true }
+    { $set: updateFields },
+    { new: true, runValidators: true }
   ).select("-password -confirm_password -refreshToken");
 
   if (!updatedProfileOfLawyer) {

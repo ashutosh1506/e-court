@@ -39,8 +39,21 @@ const lawyerSchema = new Schema(
       type: String,
       required: true,
     },
-    confirm_password: {
+    image: {
+      type: String, // URL of uploaded image
+      required: false,
+    },
+    lawyerType: {
       type: String,
+      enum: [
+        "Criminal",
+        "Civil",
+        "Family",
+        "Corporate",
+        "Property",
+        "Tax",
+        "Others",
+      ],
       required: true,
     },
     refreshToken: {
@@ -73,11 +86,9 @@ lawyerSchema.methods.generateAccessToken = function () {
 
 // generate refresh token
 lawyerSchema.methods.generateRefreshToken = function () {
-  return jwt.sign(
-    { _id: this._id },
-    process.env.REFRESH_TOKEN_SECRET,
-    { expiresIn: process.env.REFRESH_TOKEN_EXPIRY }
-  );
+  return jwt.sign({ _id: this._id }, process.env.REFRESH_TOKEN_SECRET, {
+    expiresIn: process.env.REFRESH_TOKEN_EXPIRY,
+  });
 };
 
 export const Lawyer = mongoose.model("Lawyer", lawyerSchema);
