@@ -1,4 +1,6 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import home_image from "../assets/home_image.png";
 
 export default function Header() {
   const messages = [
@@ -23,8 +25,7 @@ export default function Header() {
         className="relative flex items-center justify-center text-center text-white 
                    h-[60vh] sm:h-[70vh] md:h-[80vh] lg:h-[90vh] px-4"
         style={{
-          backgroundImage:
-            "url('https://d2u1z1lopyfwlx.cloudfront.net/thumbnails/abf8996f-352b-5cf2-940d-abc4fd77599d/aea87596-f96d-554b-b6b6-3f49ba6ea7ca.jpg')",
+          backgroundImage: `url(${home_image})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
         }}
@@ -41,9 +42,13 @@ export default function Header() {
             Digital transformation of the Indian Judiciary. Access court
             services, file cases, and track proceedings online.
           </p>
-          <button className="btn btn-accent text-neutral font-bold text-sm sm:text-base md:text-lg px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full shadow-lg hover:scale-105 hover:shadow-info transition">
+
+          <Link
+            to="/dashboard"
+            className="btn btn-accent text-neutral font-bold text-sm sm:text-base md:text-lg px-4 sm:px-6 md:px-8 py-2 sm:py-3 rounded-full shadow-lg hover:scale-105 hover:shadow-info transition"
+          >
             Access e-Court Services
-          </button>
+          </Link>
         </div>
       </section>
 

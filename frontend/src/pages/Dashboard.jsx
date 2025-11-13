@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { Link, Outlet, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 function randomID(len = 7) {
   const chars =
@@ -53,7 +54,10 @@ const Dashboard = () => {
     navigate(`/dashboard/meeting-room?roomID=${randomID()}`);
   };
 
-  if (!isLoggedIn) return null;
+  if (!isLoggedIn) {
+    toast.error("Login First!");
+    return null;
+  }
 
   return (
     <div>

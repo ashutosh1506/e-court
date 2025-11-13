@@ -5,7 +5,7 @@ import { setRoleAsClient, setRoleAsLawyer, logout } from "../utils/userSlice";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { Menu, X } from "lucide-react";
-
+import logo from "../assets/logo.png";
 export default function Navbar() {
   const [open, setOpen] = useState(false);
   const [renderSidebar, setRenderSidebar] = useState(false);
@@ -103,12 +103,16 @@ export default function Navbar() {
           } `}
       >
         <div className="flex items-center gap-3">
-          <img
-            src="https://thumbs.dreamstime.com/b/justice-scale-grunge-texture-as-symbol-law-vintage-parchment-texture-as-concept-old-legal-system-36389701.jpg"
-            alt="Logo"
-            className="w-12 h-12 rounded-full object-cover"
-          />
-          <span className="text-xl font-bold">Virtual-Portal</span>
+          <Link to="/">
+            <img
+              src={logo}
+              alt="Logo"
+              className="w-12 h-12 rounded-full object-cover"
+            />
+          </Link>
+          <Link to={"/"} className="text-xl font-bold">
+            Virtual-Portal
+          </Link>
         </div>
         <ul className="hidden md:flex gap-8 items-center">
           <li>
@@ -132,7 +136,7 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link to="/contact" className="hover:text-info">
+            <Link to="/contact" className="hover:text-info ">
               Contact Us
             </Link>
           </li>
@@ -141,7 +145,7 @@ export default function Navbar() {
               tabIndex={0}
               className="cursor-pointer hover:text-info transition"
             >
-              Courts ↓
+              <span className="text-lg ">Courts ↓</span>
             </label>
             <ul
               tabIndex={0}

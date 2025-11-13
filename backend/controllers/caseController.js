@@ -2,10 +2,12 @@ import { Case } from "../models/caseModel.js";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
 import { ApiError } from "../utils/ApiError.js";
+import crypto from "crypto";
 
+//SEARCH BY CNR NUMBER
 
 const searchByCnrNumber = asyncHandler(async (req, res) => {
-  const cnrNumber = req.body;
+  const { cnrNumber } = req.body;
 
   if (!cnrNumber?.trim()) {
     throw new ApiError(400, "CNR number is required");
@@ -25,7 +27,7 @@ const searchByCnrNumber = asyncHandler(async (req, res) => {
   });
 
   if (!caseData) {
-    throw new ApiError(404, "Case not found with the provided CNR number ");
+    throw new ApiError(404, "Case not found with the provided CNR number");
   }
 
   return res
@@ -33,7 +35,9 @@ const searchByCnrNumber = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, caseData, "Case found successfully"));
 });
 
-import crypto from "crypto";
+
+
+// CREATE CASE — CNR + CASE NUMBER AUTO GENERATE
 
 const createCase = asyncHandler(async (req, res) => {
   const {
@@ -97,7 +101,8 @@ const createCase = asyncHandler(async (req, res) => {
 
     caseNumber,
     cnrNumber,
-    nextHearingDate
+    nextHearingDate,
+    status: "Pending"
   });
 
   return res
@@ -109,5 +114,42 @@ const createCase = asyncHandler(async (req, res) => {
 
 
 
+// FETCH CASE DETAILS USING CNR 
 
-export { searchByCnrNumber, createCase };
+const fetchCaseDetails = asyncHandler(async (req, res) => {
+  const { cnrNumber } = req.body;
+
+  if (!cnrNumber?.trim()) throw new ApiError(400, "CNR number is required");
+
+  const cnrPattern = /^[A-Za-z0-9]{16}$/;
+  if (!cnrPattern.test(cnrNumber))
+    throw new ApiError(400, "Invalid CNR format");
+
+  const caseData = await Case.findOne({
+    cnrNumber: cnrNumber.toUpperCase()
+  }).lean();
+
+  if (!caseData)
+    throw new ApiError(404, "No case found with the provided CNR number");
+
+  const caseDetails = {
+    caseType: caseData.caseType,
+    cnrNumber: caseData.cnrNumber,
+    court: caseData.court,
+    petitionerName: caseData.petitioner?.name,
+    petitionerAddress: caseData.petitioner?.address,
+    petitionerContact: caseData.petitioner?.contact,
+    advocateName: caseData.advocate?.name,
+    advocateBarRegNo: caseData.advocate?.barRegNo,
+    advocateContact: caseData.advocate?.contact,
+    filingDate: caseData.createdAt,
+    status: caseData.status
+  };
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, caseDetails, "Case details fetched successfully"));
+});
+
+
+export { searchByCnrNumber, createCase, fetchCaseDetails };
