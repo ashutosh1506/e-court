@@ -33,6 +33,7 @@
 - Integrated video meeting room feature with ZegoCloud
 - Integrated Register case API
 - Integrated check case status API
+- Integrated find lawyer API
 
 # Aanya
 

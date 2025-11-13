@@ -10,7 +10,6 @@ const FindLawyer = () => {
       try {
         const response = await fetch(backendURL + "/lawyers/details ");
         const result = await response.json();
-        console.log(result?.data);
 
         if (response.ok) {
           setLawyers(result.data);

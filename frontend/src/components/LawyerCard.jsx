@@ -12,7 +12,10 @@ const LawyerCard = ({ lawyer }) => {
       <div className="card bg-base-100 w-full shadow-sm">
         <figure>
           <img
-            src={lawyer.image || "https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png"}
+            src={
+              lawyer.image ||
+              "https://cdn.pixabay.com/photo/2018/04/18/18/56/user-3331256_1280.png"
+            }
             alt={lawyer.fullName}
             className="object-cover h-48 w-full"
           />
@@ -28,9 +31,7 @@ const LawyerCard = ({ lawyer }) => {
         </div>
       </div>
 
-      {showModal && (
-        <LawyerModal lawyerId={lawyer._id} onClose={handleClose} />
-      )}
+      {showModal && <LawyerModal lawyerId={lawyer._id} onClose={handleClose} />}
     </>
   );
 };
