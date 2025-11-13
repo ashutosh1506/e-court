@@ -11,4 +11,3 @@ router.route("/searchByCaseType").post(verifyJWT, searchByCaseType);
 router.route("/registerCase").post(verifyJWT, createCase);
 
 export default router;
- 
