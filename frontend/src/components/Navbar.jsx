@@ -121,7 +121,13 @@ export default function Navbar() {
             </Link>
           </li>
           <li>
-            <Link to="/dashboard" className="hover:text-info">
+            <Link
+              to="/dashboard"
+              className="hover:text-info"
+              onClick={() => {
+                if (!isLoggedIn) toast.error("Login First");
+              }}
+            >
               Dashboard
             </Link>
           </li>

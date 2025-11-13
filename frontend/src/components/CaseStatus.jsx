@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setCaseData } from "../utils/caseSlice";
+import { toast } from "react-toastify";
 
 // CNR : 2D937FBD560BB266
 
@@ -25,8 +26,8 @@ const CaseStatus = () => {
       const caseData = response?.data?.data;
       dispatch(setCaseData(caseData));
       navigate("/dashboard/case-details");
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      toast.error("Invalid CNR Number");
     }
   };
 
