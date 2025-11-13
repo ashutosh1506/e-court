@@ -54,6 +54,9 @@ const registerLawyer = asyncHandler(async (req, res) => {
     throw new ApiError(400, "Lawyer already exists with this email");
   }
 
+  const salt = await bcrypt.genSalt(10);
+  const hashedPassword = await bcrypt.hash(password, salt);
+
   const lawyer = await Lawyer.create({
     fullName,
     dob,
@@ -62,8 +65,8 @@ const registerLawyer = asyncHandler(async (req, res) => {
     barAssociationNo,
     state,
     gender,
-    password,
-    confirm_password: password,
+    password : hashedPassword,
+    confirm_password: hashedPassword,
   });
 
   const createdLawyer = await Lawyer.findById(lawyer._id).select(
