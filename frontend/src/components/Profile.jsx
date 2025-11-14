@@ -175,18 +175,19 @@ const Profile = () => {
   }
   return (
     <div className="w-full min-h-screen flex items-center justify-center bg-base-100/90 lg:-mt-10">
-      <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-x-20 gap-y-10 self-stretch pb-20 mt-10">
+      <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-center gap-x-20 gap-y-10 self-stretch lg:pb-50 mt-10">
         {/* Left: Profile Card */}
         <div className="flex flex-col bg-base-100 shadow-xl rounded-xl w-full lg:w-2/3 max-w-md h-full hover:shadow-2xl transition duration-200 mb-10 lg:mb-0">
-          <div className="mx-auto w-40 p-6">
+          <div className="mx-auto w-40 h-40  my-10">
             <img
               src={
                 client.image ||
-                "https://img.daisyui.com/images/profile/demo/batperson@192.webp"
+                "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png"
               }
-              className="rounded-full shadow-lg border-4 border-primary"
+              className="w-full h-full rounded-full object-cover shadow-lg border-4 border-primary"
             />
           </div>
+
           <div className="p-6 ">
             <h2 className="text-center text-2xl font-bold text-primary -mt-2">
               Details
@@ -231,7 +232,7 @@ const Profile = () => {
         <div className="hidden lg:flex opacity-70 divider divider-horizontal self-stretch"></div>
 
         {/* Right: Edit Profile Form */}
-        <div className="flex items-center justify-center w-full lg:w-1/2 max-w-lg hover:shadow-2xl transition duration-200 self-stretch">
+        <div className="flex items-center justify-center w-full lg:w-110 max-w-lg hover:shadow-2xl transition duration-200 self-stretch">
           <div className="card w-full h-full bg-base-100 shadow-xl p-8 rounded-xl">
             <h2 className="text-2xl font-bold text-center text-secondary mb-6">
               Edit Your Profile
